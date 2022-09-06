@@ -1,0 +1,9 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.2",
+        "guzzlehttp/guzzle": "7.0",
+        "firebase/php-jwt": "^5.2",
+        "vgrem/php-spo": "^2.5",
+        "mpdf/mpdf": "^8.0"
+    }
+}
