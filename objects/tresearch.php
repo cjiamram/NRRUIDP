@@ -16,12 +16,14 @@ class  tresearch{
 	public $budgetType;
 	public $researchSource;
 	public $departmentId;
+	public $levelStatus;
 
 
 	public function setAprove($id,$status){
 		$query="UPDATE t_research 
 		SET 
-		isAprove=:status 
+		isAprove=:status,
+		levelStatus=levelStatus+1 
 		WHERE id=:id
 		";
 		$stmt = $this->conn->prepare($query);
@@ -59,7 +61,9 @@ class  tresearch{
 			budget=:budget,
 			budgetType=:budgetType,
 			researchSource=:researchSource,
-			departmentId=:departmentId
+			departmentId=:departmentId,
+			levelStatus=1
+
 	';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":userCode",$this->userCode);

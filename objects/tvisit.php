@@ -21,12 +21,14 @@ class  tvisit{
 	public $visitSite;
 	public $departmentId;
 	public $message;
+	public $levelStatus;
 
 
 	public function setAprove($id,$status){
 		$query="UPDATE t_visit 
 		SET 
-		isAprove=:status 
+			isAprove=:status,
+			levelStatus=levelStatus+1 
 		WHERE id=:id
 		";
 		$stmt = $this->conn->prepare($query);

@@ -15,17 +15,20 @@ class  tsemina{
 	public $createDate;
 	public $isAprove;
 	public $departmentId;
+	public $levelStatus;
 
 	public function setAprove($id,$status){
 		$query="UPDATE t_semina 
 		SET 
-		isAprove=:status 
+		isAprove=:status,
+		levelStatus=levelStatus+1 
 		WHERE id=:id
 		";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":status",$status);
 		$stmt->bindParam(":id",$id);
 		$flag=$stmt->execute();
+		//print_r($stmt->errorInfo());
 		return $flag;
 	}
 
@@ -56,7 +59,8 @@ class  tsemina{
 			yearPlan=:yearPlan,
 			createDate=:createDate,
 			isAprove=:isAprove,
-			departmentId=:departmentId
+			departmentId=:departmentId,
+			levelStatus=1
 	';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":userCode",$this->userCode);

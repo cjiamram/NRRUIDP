@@ -23,12 +23,16 @@ class  tacademicplan{
 	public $duration;
 	public $eduType;
 	public $message;
+	public $levelStatus;
 
+
+	
 
 	public function setAprove($id,$status){
 		$query="UPDATE t_academicplan 
 		SET 
-		isAprove=:status 
+		isAprove=:status,
+		levelStatus=levelStatus+1
 		WHERE id=:id
 		";
 		$stmt = $this->conn->prepare($query);
@@ -72,7 +76,8 @@ class  tacademicplan{
 			placeType=:placeType,
 			departmentId=:departmentId,
 			duration=:duration,
-			eduType=:eduType
+			eduType=:eduType,
+			levelStatus=1
 	';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":userCode",$this->userCode);

@@ -41,10 +41,6 @@
       </h1>
       <ol class="breadcrumb">
    
-        <!--<input type="button" id="btnSearch"  class="btn btn-success pull-right"  value="ค้นหาข้นสูง">
-        <input type="button" id="btnInput"   class="btn btn-primary pull-right"  value="สร้าง">
-        -->
-
       </ol>
     </section>
 
@@ -135,6 +131,9 @@ function setRequestStatus(id,pType,status){
         "isAprove":status
       }
 
+  jsonData=JSON.stringify(jsonObj);
+  console.log(jsonData);
+
   switch(pType){
     case "1":
       {url="<?=$rootPath?>/tacademicplan/setAprove.php";
@@ -161,18 +160,31 @@ function setRequestStatus(id,pType,status){
 }
 
 function saveAprove(){
-    var url='<?=$rootPath?>/taproverequest/create.php';
-    jsonObj={
-      requestId:$("#obj_requestId").val(),
-      pType:$("#obj_pType").val(),
-      message:$("#obj_message").val(),
-      status:$('input[name="obj_status"]:checked').val()
+   
+
+    var url ="<?=$rootPath?>/tsupervisoraprove/create.php";
+    var supervisorCode='<?=$userCode?>';
+    //console.log(url);
+    var jsonObj={
+        idRequest:$("#obj_requestId").val(),
+        workType: $("#obj_workType").val(),
+        userCode:$("#obj_userCode").val(),
+        supervisorCode:$("#obj_levelWork").val(),
+        levelWork:supervisorCode,
+        notification:$("#obj_notification").val(),
+        statusAprove:$('input[name="obj_status"]:checked').val()
     }
     var jsonData=JSON.stringify (jsonObj);
+    console.log(url);
     var flag=executeData(url,jsonObj,false);
-    flag &=setRequestStatus($("#obj_requestId").val(),$("#obj_pType").val(),$('input[name="obj_status"]:checked').val());
+    console.log(jsonData);
+    //console.log(flag);
+    flag &=setRequestStatus($("#obj_requestId").val(),$("#obj_workType").val(),$('input[name="obj_status"]:checked').val());
+    console.log(flag);
     return flag;
 }
+
+
 
 function sendEmail(requestCode,msg){
   var url="<?=$rootPath?>/retreiveData/sendMail.php";
@@ -187,14 +199,20 @@ function sendEmail(requestCode,msg){
 }
 
 function loadInput(){
+   var url="<?=$rootPath?>/tsupervisoraprove/input.php";
+   $("#dvInputBody").load(url);
+
 }
 
 function displayData(){
- 
-    var url="<?=$rootPath.'/'.$lastPath?>/displayData.php?departmentId=<?=$dapartmentId?>&keyWord="+$("#txtSearch").val();
-    console.log(url);
+    var url="<?=$rootPath.'/'.$lastPath?>/displayWaitAproveByLevel.php?userCode=<?=$userCode?>";
     $("#tblDisplay").html("");
     $("#tblDisplay").load(url);
+ }
+
+
+ function displayRequest(){
+
  }
 
  function loadPage(){
@@ -209,6 +227,16 @@ function displayData(){
 
  }
 
+ function setAprove(id,pType,underCode,fullName,supervisorCode,levelStatus){
+    $("#obj_requestId").val(id);  
+    $("#obj_workType").val(pType);  
+    $("#obj_supervisorCode").val(supervisorCode);
+    $("#obj_levelWork").val(levelStatus);
+    $("#obj_fullName").val(fullName);
+    $("#obj_userCode").val(underCode);
+    $("#modal-input").modal("toggle");
+ }
+
  $( document ).ready(function() {
     loadPage();
     $("#btnInput").click(function(){
@@ -220,10 +248,19 @@ function displayData(){
     });
 
     $("#btnSave").click(function(){
-        saveAprove();
-        sendEmail($("#obj_userCode").val(),$("#obj_message").val());
-
-        displayData();
+        flag=saveAprove();
+        if(flag===1){
+         swal.fire({
+            title: "อนุมัติแผนพัฒนาเสร็จสมบูรณ์แล้ว",
+            type: "success",
+            buttons: [false, "ปิด"],
+            dangerMode: false,
+            }).then((result)=>{
+                sendEmail($("#obj_userCode").val(),$("#obj_message").val());
+                displayData();
+            });
+        }
+        
         $("#modal-input").modal("hide");
 
     });

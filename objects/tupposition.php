@@ -13,17 +13,20 @@ class  tupposition{
 	public $createDate;
 	public $departmentId;
 	public $isAprove;
+	public $levelStatus;
 
 	public function setAprove($id,$status){
 		$query="UPDATE t_upposition 
 		SET 
-		isAprove=:status 
+		isAprove=:status,
+		levelStatus=levelStatus+1 
 		WHERE id=:id
 		";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":status",$status);
 		$stmt->bindParam(":id",$id);
 		$flag=$stmt->execute();
+		//print_r($stmt->errorInfo());
 		return $flag;
 	}
 
@@ -51,7 +54,8 @@ class  tupposition{
 			userCode=:userCode,
 			createDate=:createDate,
 			departmentId=:departmentId,
-			isAprove=0
+			isAprove=0,
+			levelStatus=1
 	';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":expertType",$this->expertType);
