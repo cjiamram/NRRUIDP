@@ -38,6 +38,28 @@ class  tvisit{
 		return $flag;
 	}
 
+	public function getAproveStatus($id){
+		$query="SELECT 
+			A.isAprove,
+			A.levelStatus,
+			B.status,
+			C.levelStatus 
+		FROM t_visit A 
+		INNER JOIN t_status B 
+		ON A.isAprove=B.code 
+		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+		WHERE A.id=:id";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":id",$id);
+		$stmt->execute();
+		if($stmt->rowCount()>0){
+			$row=$stmt->fetch(PDO::FETCH_ASSOC);
+			extract($row);
+			return $status."->ประเมินโดย :".$levelStatus;
+		}
+			return "";
+	}
+
 	public function setSelfAction($id,$status,$message){
 		$query="UPDATE t_visit 
 		SET 
@@ -55,24 +77,22 @@ class  tvisit{
 
 
 	public function create(){
-		$query='INSERT INTO t_visit  
+		$query="INSERT INTO t_visit  
         	SET 
-			userCode=:userCode,
-			visitObjective=:visitObjective,
-			projectDetail=:projectDetail,
-			expectation=:expectation,
-			budget=:budget,
-			joinGroup=:joinGroup,
-			yearPlan=:yearPlan,
-			createDate=:createDate,
-			duration=:duration,
-			monthPlan=:monthPlan,
-			fileAttach=:fileAttach,
-			isAprove=:isAprove,
-			visitSite=:visitSite,
-			departmentId=:departmentId
-	';
-		//print_r($this->userCode);
+					userCode=:userCode,
+					visitObjective=:visitObjective,
+					projectDetail=:projectDetail,
+					expectation=:expectation,
+					budget=:budget,
+					joinGroup=:joinGroup,
+					yearPlan=:yearPlan,
+					createDate=:createDate,
+					duration=:duration,
+					monthPlan=:monthPlan,
+					fileAttach=:fileAttach,
+					isAprove=:isAprove,
+					visitSite=:visitSite,
+					departmentId=:departmentId";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":userCode",$this->userCode);
 		$stmt->bindParam(":visitObjective",$this->visitObjective);
@@ -94,20 +114,20 @@ class  tvisit{
 	public function update(){
 		$query='UPDATE t_visit 
         	SET 
-			userCode=:userCode,
-			visitObjective=:visitObjective,
-			projectDetail=:projectDetail,
-			expectation=:expectation,
-			budget=:budget,
-			joinGroup=:joinGroup,
-			yearPlan=:yearPlan,
-			createDate=:createDate,
-			duration=:duration,
-			monthPlan=:monthPlan,
-			fileAttach=:fileAttach,
-			isAprove=:isAprove,
-			visitSite=:visitSite,
-			departmentId=:departmentId
+				userCode=:userCode,
+				visitObjective=:visitObjective,
+				projectDetail=:projectDetail,
+				expectation=:expectation,
+				budget=:budget,
+				joinGroup=:joinGroup,
+				yearPlan=:yearPlan,
+				createDate=:createDate,
+				duration=:duration,
+				monthPlan=:monthPlan,
+				fileAttach=:fileAttach,
+				isAprove=:isAprove,
+				visitSite=:visitSite,
+				departmentId=:departmentId
 		 WHERE id=:id';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":userCode",$this->userCode);
@@ -166,7 +186,9 @@ class  tvisit{
 			A.fileAttach,
 			A.isAprove,
 			A.visitSite,
-			B.status
+			B.status,
+			A.levelStatus
+
 		FROM t_visit A LEFT OUTER JOIN t_status B  
 		ON A.isAprove=B.code
 		WHERE A.userCode LIKE :userCode';

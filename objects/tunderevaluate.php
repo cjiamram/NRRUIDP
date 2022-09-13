@@ -10,19 +10,23 @@ class  tunderevaluate{
 	public $userCode;
 	public $createDate;
 	public $departmentCode;
+	public $levelEvaluate;
 	public function create(){
 		$query='INSERT INTO t_underevaluate  
         	SET 
 			supervisorCode=:supervisorCode,
 			userCode=:userCode,
 			createDate=:createDate,
-			departmentCode=:departmentCode
+			departmentCode=:departmentCode,
+			levelEvaluate=:levelEvaluate
 	';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":supervisorCode",$this->supervisorCode);
 		$stmt->bindParam(":userCode",$this->userCode);
 		$stmt->bindParam(":createDate",$this->createDate);
 		$stmt->bindParam(":departmentCode",$this->departmentCode);
+	    $stmt->bindParam(":levelEvaluate",$this->levelEvaluate);
+
 		$flag=$stmt->execute();
 		return $flag;
 	}
@@ -32,13 +36,16 @@ class  tunderevaluate{
 			supervisorCode=:supervisorCode,
 			userCode=:userCode,
 			createDate=:createDate,
-			departmentCode=:departmentCode
+			departmentCode=:departmentCode,
+			levelEvaluate=:levelEvaluate
 		 WHERE id=:id';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":supervisorCode",$this->supervisorCode);
 		$stmt->bindParam(":userCode",$this->userCode);
 		$stmt->bindParam(":createDate",$this->createDate);
 		$stmt->bindParam(":departmentCode",$this->departmentCode);
+	    $stmt->bindParam(":levelEvaluate",$this->levelEvaluate);
+
 		$stmt->bindParam(":id",$this->id);
 		$flag=$stmt->execute();
 		return $flag;
@@ -48,7 +55,8 @@ class  tunderevaluate{
 			supervisorCode,
 			userCode,
 			createDate,
-			departmentCode
+			departmentCode,
+			levelEvaluate
 		FROM t_underevaluate WHERE id=:id';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':id',$this->id);
@@ -56,11 +64,12 @@ class  tunderevaluate{
 		return $stmt;
 	}
 
-	public function getHasUnder($departmentCode){
+	public function getHasUnder($departmentCode,$levelEvaluate){
 		$query="SELECT COUNT(id) AS CNT FROM t_underevaluate 
-		WHERE departmentCode=:departmentCode";
+		WHERE departmentCode=:departmentCode AND levelEvaluate=:levelEvaluate";
 		$stmt=$this->conn->prepare($query);
 		$stmt->bindParam(":departmentCode",$departmentCode);
+		$stmt->bindParam(":levelEvaluate",$levelEvaluate);
 		$stmt->execute();
 		$row=$stmt->fetch(PDO::FETCH_ASSOC);
 		extract($row);
@@ -75,6 +84,18 @@ class  tunderevaluate{
 		WHERE userCode=:userCode AND departmentCode=:departmentCode";
 		$stmt=$this->conn->prepare($query);
 		$stmt->bindParam(":userCode",$userCode);
+		$stmt->bindParam(":departmentCode",$departmentCode);
+		$flag=$stmt->execute();
+		return $flag;
+	}
+
+
+	public function deleteByLevel($departmentCode,$evaluateLevel){
+		$query="DELETE FROM t_underevaluate 
+		WHERE evaluateLevel=:evaluateLevel 
+		AND departmentCode=:departmentCode";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":evaluateLevel",$evaluateLevel);
 		$stmt->bindParam(":departmentCode",$departmentCode);
 		$flag=$stmt->execute();
 		return $flag;

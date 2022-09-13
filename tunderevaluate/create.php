@@ -14,6 +14,7 @@ $obj->supervisorCode = $data->supervisorCode;
 $obj->userCode = $data->userCode;
 $obj->createDate = date("Y-m-d");
 $obj->departmentCode = $data->departmentCode;
+$obj->levelEvaluate = $data->levelEvaluate;
 if($obj->create()){
 		echo json_encode(array('message'=>true));
 }

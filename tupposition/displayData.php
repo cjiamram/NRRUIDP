@@ -4,6 +4,7 @@ include_once "../lib/classAPI.php";
 include_once "../config/database.php";
 include_once "../objects/classLabel.php";
 include_once "../objects/manage.php";
+include_once "../objects/tupposition.php";
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: html/text; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -12,11 +13,11 @@ header("Access-Control-Allow-Headers: Content-Type,Access-Control-Allow-Headers,
 $database = new Database();
 $db = $database->getConnection();
 $objLbl = new ClassLabel($db);
+$objT=new tupposition($db);
 $cnf=new Config();
 $userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
 $path="tupposition/getData.php?userCode=".$userCode;
 $url=$cnf->restURL.$path;
-//print_r($url);
 $api=new ClassAPI();
 $data=$api->getAPI($url);
 echo "<thead>";
@@ -58,11 +59,13 @@ foreach ($data as $row) {
 				$str="<div class=\"col-sm-12\">".$row["expertType"]."</div><div class=\"col-sm-2\">
 				</div>";
 			}
+
+			$strT=$objT->getAproveStatus(intval($row['id']));
+			//print_r($strT."xxxxxxx");
+
 			echo '<td>'.$row["expertType"].'</td>';
 			echo '<td>'.$row["yearPlan"].'</td>';
-			//echo '<td>'.$row["description"].'</td>';
-			//echo '<td>'.Format::getTextDate($row["createDate"]).'</td>';
-			echo '<td>'.$row["status"].'</td>';
+			echo '<td>'.$strT.'</td>';
 			echo '<td>'.$str.'</td>';
 
 			
@@ -73,5 +76,5 @@ echo "</tbody>";
 ?>
 
 <script>
-		setTablePage("#tblDisplay");
+		setTablePage("#tblDisplay",20);
 </script>

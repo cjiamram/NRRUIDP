@@ -169,15 +169,15 @@ function saveAprove(){
         idRequest:$("#obj_requestId").val(),
         workType: $("#obj_workType").val(),
         userCode:$("#obj_userCode").val(),
-        supervisorCode:$("#obj_levelWork").val(),
-        levelWork:supervisorCode,
+        supervisorCode:supervisorCode,
+        levelWork:$("#obj_levelWork").val(),
         notification:$("#obj_notification").val(),
         statusAprove:$('input[name="obj_status"]:checked').val()
     }
     var jsonData=JSON.stringify (jsonObj);
-    console.log(url);
+    //console.log(url);
     var flag=executeData(url,jsonObj,false);
-    console.log(jsonData);
+    //console.log(jsonData);
     //console.log(flag);
     flag &=setRequestStatus($("#obj_requestId").val(),$("#obj_workType").val(),$('input[name="obj_status"]:checked').val());
     console.log(flag);

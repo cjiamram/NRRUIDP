@@ -4,6 +4,8 @@ include_once "../lib/classAPI.php";
 include_once "../config/database.php";
 include_once "../objects/classLabel.php";
 include_once "../objects/manage.php";
+include_once "../objects/tupposition.php";
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: html/text; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -11,6 +13,8 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With");
 $database = new Database();
 $db = $database->getConnection();
+$objT=new tupposition($db);
+
 $objLbl = new ClassLabel($db);
 $cnf=new Config();
 $userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
@@ -75,9 +79,11 @@ foreach ($data as $row) {
 			}
 			echo '<td>'.$row["expertType"].'</td>';
 			echo '<td>'.$row["yearPlan"].'</td>';
+			$strT=$objT->getAproveStatus(intval($row['id']));
+
 			//echo '<td>'.$row["description"].'</td>';
 			//echo '<td>'.Format::getTextDate($row["createDate"]).'</td>';
-			echo '<td>'.$row["status"].'</td>';
+			echo '<td>'.$strT.'</td>';
 			echo '<td>'.$str.'</td>';
 
 			
@@ -88,5 +94,5 @@ echo "</tbody>";
 ?>
 
 <script>
-		setTablePage("#tblDisplay");
+		setTablePage("#tblDisplay",20);
 </script>

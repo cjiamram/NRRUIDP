@@ -147,14 +147,19 @@
 
 <script>
 
+   /*function deleteByLevel(departmentCode,levelEvaluate){
+
+   }*/
+
    function saveUnder(userCode,index){
    		
    		var isCheck=document.getElementById("obj_chk-"+index).checked;
    		if(isCheck===true){
 		   		var superVisorCode=$("#obj_userCode").val();
 		   		var departmentCode=$("#obj_departmentCode").val();
+		   		var levelEvaluate=$("#obj_evaluateLevel").val();
+
 		   		var url="<?=$rootPath?>/tunderevaluate/isUnderExistBySuper.php?userCode="+userCode+"&supervisorCode="+superVisorCode;
-		   		//console.log(url);
 		   		var data=queryData(url);
 		   		var flag=data.flag;
 		   			
@@ -163,7 +168,8 @@
 				   		var jsonObj={
 				   				supervisorCode:superVisorCode,
 				   				userCode:userCode,
-				   				departmentCode:departmentCode
+				   				departmentCode:departmentCode,
+				   				levelEvaluate:levelEvaluate
 				   		}
 				   		var flag1=executeData(url,jsonObj,false);
 				   		return flag1;
@@ -200,6 +206,7 @@
 			supervisorName:$("#obj_supervisorName").val()
 		}
 		var jsonData=JSON.stringify (jsonObj);
+		console.log(jsonData);
 		var flag=executeData(url,jsonObj,false);
 		return flag;
 	}
@@ -242,11 +249,18 @@
 	 	return data.id;
 	}
 
+	function deleteByLevel(){
+		var url="<?=$rootPath?>/tunderevaluate/deleteByLevel.php?departmentCode="+$("#departmentCode").val()+"&evaluateLevel="+$("#obj_evaluateLevel").val();
+		executeGet(url);
+
+	}
+
 	function saveData(){
 			
 		var flag;
 		flag=true;
 		if(flag==true){
+			deleteByLevel();
 			if($("#obj_id").val()!=""){
 				flag=updateData();
 				displayUser();
@@ -346,8 +360,8 @@
 		setDDLPrefix(url,"#obj_departmentCode","***เลือกหน่วยงาน***");
 	}
 
-	function getHasUnder(departmentCode){
-		var url="<?=$rootPath?>/tunderevaluate/getHasUnder.php?departmentCode="+departmentCode;
+	function getHasUnder(departmentCode,levelEvaluate){
+		var url="<?=$rootPath?>/tunderevaluate/getHasUnder.php?departmentCode="+departmentCode+"&levelEvaluate="+levelEvaluate;
 		var data=queryData(url);
 		return data.flag;
 
@@ -383,13 +397,6 @@
 	$(document).ready(function(){
 		listDepartment();
 		displayUser();
-
-		
-		
-
-		/*$("#obj_departmentCode").change(function(){
-			
-		});*/
 
 		$("#obj_keyWord").change(function(){
 			loadUser();

@@ -5,22 +5,22 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With");
 include_once "../config/database.php";
-include_once "../objects/tunderevaluate.php";
+include_once "../objects/tlevelstatus.php";
 $database = new Database();
 $db = $database->getConnection();
-$obj = new tunderevaluate($db);
+$obj = new tlevelstatus($db);
 $data = json_decode(file_get_contents("php://input"));
-$obj->supervisorCode = $data->supervisorCode;
-$obj->userCode = $data->userCode;
-$obj->createDate = $data->createDate;
-$obj->departmentCode = $data->departmentCode;
-$obj->levelEvaluate = $data->levelEvaluate;
-
-$obj->id = $data->id;
-if($obj->update()){
-		echo json_encode(array('message'=>true));
+$obj->id = isset($_GET['id']) ? $_GET['id'] : 0;
+$stmt=$obj->readOne();
+$num=$stmt->rowCount();
+if($num>0){
+		$row = $stmt->fetch(PDO::FETCH_ASSOC);
+		extract($row);
+		$item = array(
+			"id"=>$id,
+			"code" =>  $code,
+			"levelStatus" =>  $levelStatus
+		);
 }
-else{
-		echo json_encode(array('message'=>false));
-}
+echo(json_encode($item));
 ?>

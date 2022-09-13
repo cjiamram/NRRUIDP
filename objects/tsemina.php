@@ -32,6 +32,28 @@ class  tsemina{
 		return $flag;
 	}
 
+	public function getAproveStatus($id){
+		$query="SELECT 
+			A.isAprove,
+			A.levelStatus,
+			B.status,
+			C.levelStatus 
+		FROM t_semina A 
+		INNER JOIN t_status B 
+		ON A.isAprove=B.code 
+		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+		WHERE A.id=:id";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":id",$id);
+		$stmt->execute();
+		if($stmt->rowCount()>0){
+			$row=$stmt->fetch(PDO::FETCH_ASSOC);
+			extract($row);
+			return $status."->ประเมินโดย :".$levelStatus;
+		}
+			return "";
+	 }
+
 	public function setSelfAction($id,$status,$message){
 		$query="UPDATE t_semina 
 		SET 

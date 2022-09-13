@@ -889,7 +889,7 @@
 			return $stmt;
 	    }
 
-	public function getWaitAproveByLevel($supervisorCode){
+	public function getWaitAproveByLevel($supervisorCode,$keyWord){
 		$data=$this->getbySupervisor($supervisorCode);
 		$query="SELECT
 			    	V.id, 
@@ -928,16 +928,20 @@
 					AS V 
 					LEFT OUTER JOIN t_ptype B ON V.ptype=B.code 
 					LEFT OUTER JOIN t_fullname C ON V.userCode=C.userCode
-					WHERE 
-					(V.levelStatus=1 AND V.isAprove=0)
+					WHERE
+					CONCAT(V.userCode,' ',C.fullName) LIKE :keyWord
+					AND 
+					((V.levelStatus=1 AND V.isAprove=0)
 						OR 
-					(V.levelStatus>1 AND V.isAprove=1) 
+					(V.levelStatus>1 AND V.isAprove=1)) 
 					ORDER BY createDate DESC
 			";
 		
 			$stmt=$this->conn->prepare($query);
 			$stmt->bindParam(":departmentCode",$data["departmentCode"]);
 			$stmt->bindParam(":status",$data["evaluateLevel"]);
+			$keyWord="%{$keyWord}%";
+			$stmt->bindParam(":keyWord",$keyWord);
 			$stmt->execute();
 			return $stmt;
 

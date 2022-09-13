@@ -26,6 +26,25 @@ class  tacademicplan{
 	public $levelStatus;
 
 
+	public function getAproveStatus($id){
+		$query="SELECT A.isAprove,
+		A.levelStatus,
+		B.status,
+		C.levelStatus FROM t_academicplan  A 
+		INNER JOIN t_status B 
+		ON A.isAprove=B.code 
+		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+		WHERE A.id=:id ";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":id",$id);
+		$stmt->execute();
+		if($stmt->rowCount()>0){
+			$row=$stmt->fetch(PDO::FETCH_ASSOC);
+			extract($row);
+			return $status."->ประเมินโดย :".$levelStatus;
+		}
+			return "";
+	}
 	
 
 	public function setAprove($id,$status){
@@ -187,7 +206,8 @@ class  tacademicplan{
 			A.description,
 			C.placeType,
 			A.duration,
-			F.eduType
+			F.eduType,
+			A.levelStatus
 
 		FROM t_academicplan A LEFT OUTER JOIN t_sourcetype B
 		ON A.sourceType=B.code LEFT OUTER JOIN t_placetype C 

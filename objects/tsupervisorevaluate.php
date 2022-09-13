@@ -12,6 +12,7 @@ class  tsupervisorevaluate{
 	public $depPosition;
 	public $createDate;
 	public $supervisorName;
+	public $levelEvaluate;
 	public function create(){
 		$query='INSERT INTO t_supervisorevaluate  
         	SET 
@@ -29,7 +30,9 @@ class  tsupervisorevaluate{
 		$stmt->bindParam(":depPosition",$this->depPosition);
 		$stmt->bindParam(":createDate",$this->createDate);
 		$stmt->bindParam(":supervisorName",$this->supervisorName);
+		//$stmt->bindParam(":levelEvaluate",$this->levelEvaluate);
 		$flag=$stmt->execute();
+		//print_r($stmt->errorInfo());
 		return $flag;
 	}
 	
@@ -100,6 +103,7 @@ class  tsupervisorevaluate{
 		$stmt->bindParam(":depPosition",$this->depPosition);
 		$stmt->bindParam(":createDate",$this->createDate);
 		$stmt->bindParam(":supervisorName",$this->supervisorName);
+		//$stmt->bindParam(":levelEvaluate",$this->levelEvaluate);
 		$stmt->bindParam(":id",$this->id);
 		$flag=$stmt->execute();
 		return $flag;
@@ -111,7 +115,8 @@ class  tsupervisorevaluate{
 			evaluateLevel,
 			depPosition,
 			createDate,
-			supervisorName
+			supervisorName,
+			levelEvaluate
 		FROM t_supervisorevaluate WHERE id=:id';
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':id',$this->id);
@@ -125,7 +130,8 @@ class  tsupervisorevaluate{
 			evaluateLevel,
 			depPosition,
 			createDate,
-			supervisorName
+			supervisorName,
+			evaluateLevel
 		FROM t_supervisorevaluate 
 		WHERE supervisorName LIKE :keyWord';
 		$stmt = $this->conn->prepare($query);
@@ -134,6 +140,18 @@ class  tsupervisorevaluate{
 		$stmt->execute();
 		return $stmt;
 	}
+	
+	function deleteByLevel($departmentCode,$levelEvaluate){
+		$query="DELETE FROM t_supervisorevaluate 
+		WHERE departmentCode=:departmentCode 
+		AND levelEvaluate=:levelEvaluate";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(':departmentCode',$departmentCode);
+		$stmt->bindParam(':levelEvaluate',$levelEvaluate);
+		$flag=$stmt->execute();
+		return $flag;
+	}
+
 	function delete(){
 		$query='DELETE FROM t_supervisorevaluate WHERE id=:id';
 		$stmt = $this->conn->prepare($query);

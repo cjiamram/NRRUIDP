@@ -3,6 +3,7 @@ include_once "../config/config.php";
 include_once "../lib/classAPI.php";
 include_once "../config/database.php";
 include_once "../objects/classLabel.php";
+include_once "../objects/tvisit.php";
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: html/text; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
@@ -10,6 +11,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With");
 $database = new Database();
 $db = $database->getConnection();
+$objT= new tvisit($db);
 $objLbl = new ClassLabel($db);
 $cnf=new Config();
 $userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
@@ -23,10 +25,7 @@ echo "<thead>";
 			echo "<th>".$objLbl->getLabel("t_visit","visitObjective","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_visit","projectDetail","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_visit","expectation","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_visit","budget","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_visit","joinGroup","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_visit","plan","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_visit","duration","TH")."(วัน)</th>";
+
 			echo "<th>".$objLbl->getLabel("t_visit","isAprove","TH")."</th>";
 			
 			echo "<th width=\"200px\">จัดการ</th>";
@@ -73,11 +72,8 @@ foreach ($data as $row) {
 			echo '<td>'.$row["visitObjective"].'</td>';
 			echo '<td>'.$row["projectDetail"].'</td>';
 			echo '<td>'.$row["expectation"].'</td>';
-			//echo '<td>'.$row["budget"].'</td>';
-			//echo '<td>'.$row["joinGroup"].'</td>';
-			//echo '<td>'.$row["monthPlan"]."/".$row["yearPlan"].'</td>';
-			//echo '<td>'.$row["duration"].'</td>';
-			echo '<td>'.$row["status"].'</td>';
+			$strT=$objT->getAproveStatus(intval($row['id']));
+			echo '<td>'.$strT.'</td>';
 			echo '<td>'.$str.'</td>';
 
 			echo "</tr>";
@@ -87,5 +83,5 @@ echo "</tbody>";
 ?>
 
 <script>
-	setTablePage("#tblDisplay");
+	setTablePage("#tblDisplay",20);
 </script>

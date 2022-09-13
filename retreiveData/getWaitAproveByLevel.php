@@ -8,8 +8,9 @@
 	$obj=new Data($db);
 
 	$userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
+	$keyWord=isset($_GET["keyWord"])?$_GET["keyWord"]:"";
 
-	$stmt=$obj->getWaitAproveByLevel($userCode);
+	$stmt=$obj->getWaitAproveByLevel($userCode,$keyWord);
 	if($stmt->rowCount()>0){
 		$objArr=array();
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC)){

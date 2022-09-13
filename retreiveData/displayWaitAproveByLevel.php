@@ -6,7 +6,7 @@
 	include_once "../objects/manage.php";
 	include_once "../objects/classLabel.php";
 	include_once "../config/database.php";
-
+	
 	//session_start();
 	$database = new Database();
 	$db = $database->getConnection();
@@ -15,13 +15,10 @@
 	$cnf=new Config();
 	$api=new ClassAPI();
 	$userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
-	$path="retreiveData/getWaitAproveByLevel.php?userCode=".$userCode;
+	$keyWord=isset($_GET["keyWord"])?$_GET["keyWord"]:"";
+	$path="retreiveData/getWaitAproveByLevel.php?userCode=".$userCode."&keyWord=".$keyWord;
 	$url=$cnf->restURL.$path;
-
-	//print_r($url);
-
 	$data=$api->getAPI($url);
-
 	echo "<thead>";
 		echo "<tr>";
 			echo "<th>No.</th>";
@@ -50,8 +47,6 @@
 			echo "<td>".$row["yearPlan"]."</td>\n";
 			echo "<td>".$row["status"]."</td>\n";
 
-			//setAprove(id,pType,underCode,fullName,supervisorCode,levelStatus)
-			//$userCode
 			if(intval($row["planStatus"])==0){
 			echo "<td>
 				<button type='button' class='btn btn-info'

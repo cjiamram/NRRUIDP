@@ -26,8 +26,27 @@ class  tupposition{
 		$stmt->bindParam(":status",$status);
 		$stmt->bindParam(":id",$id);
 		$flag=$stmt->execute();
-		//print_r($stmt->errorInfo());
 		return $flag;
+	}
+
+	public function getAproveStatus($id){
+		$query="SELECT A.isAprove,
+		A.levelStatus,
+		B.status,
+		C.levelStatus FROM t_upposition  A 
+		INNER JOIN t_status B 
+		ON A.isAprove=B.code 
+		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+		WHERE A.id=:id";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":id",$id);
+		$stmt->execute();
+		if($stmt->rowCount()>0){
+			$row=$stmt->fetch(PDO::FETCH_ASSOC);
+			extract($row);
+			return $status."->ประเมินโดย :".$levelStatus;
+		}
+			return "";
 	}
 
 	public function setSelfAction($id,$status,$message){
@@ -69,7 +88,7 @@ class  tupposition{
 		return $flag;
 	}
 	public function update(){
-		$query='UPDATE t_upposition 
+		$query="UPDATE t_upposition 
         	SET 
 			expertType=:expertType,
 			yearPlan=:yearPlan,
@@ -78,7 +97,7 @@ class  tupposition{
 			createDate=:createDate,
 			departmentId=:departmentId,
 			isAprove=0
-		 WHERE id=:id';
+		 WHERE id=:id";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(":expertType",$this->expertType);
 		$stmt->bindParam(":yearPlan",$this->yearPlan);
@@ -91,7 +110,7 @@ class  tupposition{
 		return $flag;
 	}
 	public function readOne(){
-		$query='SELECT  A.id,
+		$query="SELECT  A.id,
 			A.expertType,
 			A.yearPlan,
 			A.description,
@@ -101,16 +120,14 @@ class  tupposition{
 		FROM t_upposition A 
 		LEFT OUTER JOIN t_specialize B ON 
 		A.expertType =B.code  
-
-
-		WHERE A.id=:id';
+		WHERE A.id=:id";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':id',$this->id);
 		$stmt->execute();
 		return $stmt;
 	}
 	public function getData($userCode){
-		$query='SELECT  
+		$query="SELECT  
 		    A.id,
 		    A.expertType AS expertTypeCode,
 			B.specialize AS expertType,
@@ -119,13 +136,14 @@ class  tupposition{
 			A.userCode,
 			A.createDate,
 			A.isAprove,
-			C.status
+			C.status,
+			A.levelStatus
 		FROM t_upposition A 
 		LEFT OUTER JOIN t_specialize B 
 		ON A.expertType=B.code 
 		LEFT OUTER JOIN t_status C 
 		ON A.isAprove=C.code 
-		WHERE A.userCode LIKE :userCode';
+		WHERE A.userCode LIKE :userCode";
 		$stmt = $this->conn->prepare($query);
 		$stmt->bindParam(':userCode',$userCode);
 		$stmt->execute();
