@@ -31,7 +31,6 @@ echo "<thead>";
 			echo "<th>".$objLbl->getLabel("t_academicplan","degree","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_academicplan","yearPlan","TH")."/".$objLbl->getLabel("t_academicplan","budget","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_academicplan","university","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_academicplan","isAprove","TH")."</th>";
 			echo "<th>ลำดับขั้นการอนุมัติ</th>\n";
 			echo "<th width=\"200px\">จัดการ</th>";
 
@@ -42,8 +41,10 @@ echo "<tbody>";
 $i=1;
 
 foreach ($data as $row) {
+		print_r($row["id"]);
 		echo "<tr>";
 			echo '<td>'.$i++.'</td>';
+			//echo '<td>'.$row["id"].'</td>';
 			if(intval($row["isAprove"])==0){
 				$str="<div class='col-sm-12'>
 				<button type='button' class='btn btn-info'
@@ -74,7 +75,9 @@ foreach ($data as $row) {
 			echo '<td>'.$row["degree"].'</td>';
 			echo '<td>'.$row["yearPlan"]."/".number_format($row["budget"],2).'</td>';
 			echo '<td>'.$row["university"].'</td>';
-			echo '<td>'.$objT->getAproveStatus(intval($row['id'])).'</td>';
+			//getAproveLog
+			//echo '<td>'.$objT->getAproveStatus(intval($row['id'])).'</td>';
+			echo '<td>'.$objT->getAproveLog(intval($row['id'])).'</td>';
 			echo '<td>'.$str.'</td>';
 			echo "</tr>";
 }

@@ -79,7 +79,7 @@ foreach ($data as $row) {
 			echo '<td>'.$row["detail"].'</td>';
 			echo '<td>'.$row["yearPlan"].'</td>';
 			echo '<td>'.$row["researchSource"].'</td>';
-			$strT=$objT->getAproveStatus(intval($row['id']));
+			$strT=$objT->getAproveLog(intval($row['id']));
 			echo '<td>'.$strT.'</td>';
 			echo '<td>'.$str.'</td>';
 			echo "</tr>";

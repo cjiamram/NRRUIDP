@@ -34,10 +34,10 @@ $rootPath=$cnf->path;
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>NRRU Individual Development Plan</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -52,7 +52,7 @@ $rootPath=$cnf->path;
 <script src="js/menuRender.js"></script>
 <script src="js/fileManager.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.js"></script>
 <script src="js/jquery-1.12.4.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="js/canvasjs.min.js"></script>
@@ -238,7 +238,7 @@ $rootPath=$cnf->path;
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" id="dvMain">
+  <div class="content-wrapper" style="height:1000px" id="dvMain">
 
   </div>
   <!-- /.content-wrapper -->

@@ -35,7 +35,7 @@ echo "<tbody>";
 $i=1;
 foreach ($data as $row) {
 		echo "<tr>";
-			echo '<td>'.$i++.'</td>';
+			echo '<td>'.$row['id'].'</td>';
 			if($row["isAprove"]===0){
 			$str="<div class=\"col-sm-12\">
 				<button type='button' class='btn btn-info'
@@ -60,8 +60,9 @@ foreach ($data as $row) {
 				</div>";
 			}
 
-			$strT=$objT->getAproveStatus(intval($row['id']));
+			//$strT=$objT->getAproveStatus(intval($row['id']));
 			//print_r($strT."xxxxxxx");
+			$strT=$objT->getAproveLog(intval($row['id']));
 
 			echo '<td>'.$row["expertType"].'</td>';
 			echo '<td>'.$row["yearPlan"].'</td>';

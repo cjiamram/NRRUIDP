@@ -55,6 +55,49 @@ class  tresearch{
 			return "";
 	 }
 
+	 public function getAproveLog($id){
+		$query="SELECT DISTINCT
+				A.isAprove,
+				A.levelStatus AS levelStatusCode,
+				B.status,
+				C.levelStatus, 
+				E.fullName AS aproveBy
+		FROM t_research  A 
+		INNER JOIN t_status B 
+		ON A.isAprove=B.code 
+		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+		INNER JOIN t_supervisoraprove D ON A.id=D.idRequest
+		INNER JOIN t_fullname E ON D.supervisorCode=E.`userCode` 
+		WHERE A.id=:id";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":id",$id);
+		$stmt->execute();
+		$i=1;
+		if($stmt->rowCount()>0){
+			$strT="<table width='100%' style='width:100%;' border='1'>\n";
+			$strT.="<tr>\n";
+				$strT.= "<th width='50px'>No.</th>\n";
+				$strT.= "<th>สถานะ</th>\n";
+				$strT.= "<th>ลำดับขั้น</th>\n";
+				$strT.= "<th>ผู้อนุมัติ</th>\n";
+			$strT.="</tr>\n";
+			while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
+				extract($row);
+				$strT.= "<tr>\n";
+				$strT.= "<td width='50px'>".$i++."</td>\n";
+				$strT.= "<td>".$row["status"]."</td>\n";
+				$strT.= "<td>".$row["levelStatus"]."</td>\n";
+				$strT.= "<td>".$row["aproveBy"]."</td>\n";
+				$strT.= "</tr>\n";
+			}
+			$strT.="</table>\n";
+			return $strT;
+
+		}
+
+		return "";
+	}
+
 	public function setSelfAction($id,$status,$message){
 		$query="UPDATE t_research 
 		SET 

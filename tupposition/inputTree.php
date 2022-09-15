@@ -15,14 +15,14 @@ $objLbl = new ClassLabel($db);
 $cnf=new Config();
 $rootPath=$cnf->path;
 $groupType=isset($_SESSION["staffGroup"])?$_SESSION["staffGroup"]:2;
-
+$isTeacher=isset($_SESSION["isTeacher"])?$_SESSION["isTeacher"]:0;
 //print_r($groupType);
 
 ?>
  
 
 <form role='form'>
-<div class="box-body" style="height:390px">
+<div class="box-body" style="height:450px">
 <div class="col-sm-5">
 
 <aside class="main-sidebar" style="width:100%;vertical-align: text-top;">
@@ -51,7 +51,7 @@ $groupType=isset($_SESSION["staffGroup"])?$_SESSION["staffGroup"]:2;
 		<div class='form-group'>
 			<label class="col-sm-12"><?php echo $objLbl->getLabel("t_upposition","description","th").":" ?></label>
 			<div class="col-sm-12">
-				<textarea class="form-control" style="width:100%;" rows="5" id='obj_description'></textarea>
+				<textarea class="form-control" style="width:100%;" rows="10" id='obj_description'></textarea>
 			</div>
 		</div>
 </div>		
@@ -69,7 +69,6 @@ $groupType=isset($_SESSION["staffGroup"])?$_SESSION["staffGroup"]:2;
 	function getSpecial(specialCode,specialText,i){
 		$("#obj_specializeCode").val(specialCode);
 		$("#obj_specialize").text(specialText);
-		//console.log(specialText);
 
 		for(j=1;j<=n;j++){
 			
@@ -146,7 +145,6 @@ $groupType=isset($_SESSION["staffGroup"])?$_SESSION["staffGroup"]:2;
 
 	function displayTree(){
 		var url ="<?=$rootPath?>/tspecialize/listTree.php?levelNo=0&parent=&groupType=<?=$groupType?>";
-		//console.log(url);
 		var row="";
 		var data=queryData(url);
 		$.each(data, function (index, value) {

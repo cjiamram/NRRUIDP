@@ -18,8 +18,10 @@ body {
   height: 100%;
 }
 body {
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 400;
+  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family:tahoma ;
+  font-weight: 40;
+  font-size: 16px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -58,7 +60,7 @@ body {
   -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
   transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
   margin-left: 230px;
-  z-index: 820;
+  z-index: 1000px;
 }
 .layout-top-nav .content-wrapper,
 .layout-top-nav .main-footer {
@@ -70,13 +72,13 @@ body {
     margin-left: 0;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 1000px) {
   .sidebar-collapse .content-wrapper,
   .sidebar-collapse .main-footer {
     margin-left: 0;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   .sidebar-open .content-wrapper,
   .sidebar-open .main-footer {
     -webkit-transform: translate(230px, 0);
@@ -88,7 +90,7 @@ body {
 .content-wrapper {
   min-height: 100%;
   background-color: #ecf0f5;
-  z-index: 800;
+  z-index: 1000px;
 }
 .main-footer {
   background: #fff;
@@ -415,7 +417,7 @@ a:focus {
   padding-top: 50px;
   min-height: 100%;
   width: 230px;
-  z-index: 810;
+  z-index: 1000;
   -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   -moz-transition: -moz-transform 0.3s ease-in-out, width 0.3s ease-in-out;
   -o-transition: -o-transform 0.3s ease-in-out, width 0.3s ease-in-out;
@@ -560,7 +562,7 @@ a:focus {
   .sidebar-mini.sidebar-collapse .right-side,
   .sidebar-mini.sidebar-collapse .main-footer {
     margin-left: 50px !important;
-    z-index: 840;
+    z-index: 1000;
   }
   .sidebar-mini.sidebar-collapse .main-sidebar {
     -webkit-transform: translate(0, 0);
@@ -692,7 +694,7 @@ a:focus {
   padding-top: 50px;
   z-index: 1010;
 }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .control-sidebar {
     padding-top: 100px;
   }
@@ -3081,7 +3083,7 @@ table.text-center th {
 .treeview-menu > li > a {
   padding: 5px 5px 5px 15px;
   display: block;
-  font-size: 14px;
+  font-size: 16px;
 }
 .treeview-menu > li > a > .fa,
 .treeview-menu > li > a > .glyphicon,

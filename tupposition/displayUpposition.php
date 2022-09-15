@@ -79,7 +79,8 @@ foreach ($data as $row) {
 			}
 			echo '<td>'.$row["expertType"].'</td>';
 			echo '<td>'.$row["yearPlan"].'</td>';
-			$strT=$objT->getAproveStatus(intval($row['id']));
+			//$strT=$objT->getAproveStatus(intval($row['id']));
+			$strT=$objT->getAproveLog(intval($row['id']));
 
 			//echo '<td>'.$row["description"].'</td>';
 			//echo '<td>'.Format::getTextDate($row["createDate"]).'</td>';

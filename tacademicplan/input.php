@@ -22,7 +22,7 @@ $rootPath=$cnf->path;
 			<div class="col-sm-12">
 						<input type="text" 
 							class="form-control" id='obj_educationPlan' 
-							placeholder='แผนการศึกษาต่อ'>
+							placeholder='แผนการศึกษาต่อ เช่น วิศวกรรมศาสตร์ <สาขา...>'>
 			</div>
 		</div>
 		<div class='form-group'>
@@ -36,7 +36,7 @@ $rootPath=$cnf->path;
 			<div class="col-sm-12">
 				<input type="text" 
 							class="form-control" id='obj_eduCertificate' 
-							placeholder='คุณวุฒิ'>
+							placeholder='คุณวุฒิ เช่น ปริญญาเอก วิศวกรรมศาสตร์บัณฑิต'>
 			</div>
 		</div>
 		
@@ -51,7 +51,7 @@ $rootPath=$cnf->path;
 							class="form-control" id='obj_budget' 
 							placeholder='งบประมาณ'>
 			</div>
-			<div class="col-sm-4">&nbsp;
+			<div class="col-sm-4">&nbsp;<label>บาท</label>
 			</div>
 		</div>
 		<div class='form-group'>
@@ -65,7 +65,11 @@ $rootPath=$cnf->path;
 				</div>
 				<div class="form-check">
 				<input class="form-check-input" type="radio" name="obj_sourceType" id="obj_sourceType_2" value="02">
-					แหล่งทุนภายนอก
+					ทุนภายนอก
+				</div>
+				<div class="form-check">
+				<input class="form-check-input" type="radio" name="obj_sourceType" id="obj_sourceType_3" value="03">
+					ทุนส่วนบุคคล
 				</div>
 			</div>
 		</div>
@@ -74,7 +78,7 @@ $rootPath=$cnf->path;
 			<div class="col-sm-12">
 				<input type="text" 
 							class="form-control" id='obj_fundSource' 
-							placeholder='แหล่งทุน'>
+							placeholder='แหล่งทุน เช่น วช.'>
 			</div>
 		</div>
 		<div class='form-group'>
@@ -82,7 +86,7 @@ $rootPath=$cnf->path;
 			<div class="col-sm-12">
 				<input type="text" 
 							class="form-control" id='obj_university' 
-							placeholder='สถานศึกษา'>
+							placeholder='สถานศึกษา เช่น มหาวิทยาลัยราชภัฏนครราชสีมา'>
 			</div>
 		</div>
 		<div class='form-group'>
@@ -109,6 +113,7 @@ $rootPath=$cnf->path;
 				<input class="form-check-input" type="radio" name="obj_placeType" id="obj_placeType_2" value="02">
 					สถานศึกษาภายนอกประเทศ
 				</div>
+				
 			</div>
 		</div>
 		<div class='form-group'>
