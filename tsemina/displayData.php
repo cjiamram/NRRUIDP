@@ -30,7 +30,7 @@ echo "<thead>";
 			echo "<th width=\"150px\">จัดการ</th>";
 		echo "</tr>";
 echo "</thead>";
-if($data!=""){
+if(!isset($data["message"])){
 echo "<tbody>";
 $i=1;
 foreach ($data as $row) {
