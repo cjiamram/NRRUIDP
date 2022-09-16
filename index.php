@@ -343,7 +343,6 @@ $rootPath=$cnf->path;
 
 
   function initialize(){
-    //$("#dvMain").load("<?=$rootPath?>/profile/displayProfile.php");
     $("#dvMain").load("<?=$rootPath?>/profile/index.php");
   }
 

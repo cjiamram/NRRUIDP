@@ -28,38 +28,32 @@ echo "<thead>";
 			echo "<th>No.</th>";
 			echo "<th>".$objLbl->getLabel("t_upposition","expertType","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_upposition","yearPlan","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_upposition","description","TH")."</th>";
-			//echo "<th>".$objLbl->getLabel("t_upposition","createDate","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_upposition","isAprove","TH")."</th>";
-
 			echo "<th width=\"200px\">จัดการ</th>";
 		echo "</tr>";
 echo "</thead>";
 if(!isset($data["message"])){
-echo "<tbody>";
+echo "<tbody>\n";
 $i=1;
 foreach ($data as $row) {
 		echo "<tr>";
-			echo '<td>'.$i++.'</td>';
-			print_r($row["isAprove"]);
-			if(intval($row["isAprove"])==0){
+			echo '<td>'.$i++.'</td>'."\n";
 			
-
-
-			$str="<div class=\"col-sm-12\">
-				
+			$isAprove =$objT->getLevelAprove(intval($row['id']));
+			if($isAprove<2||intval($row['isAprove'])>0){
+				$str="<div class=\"col-sm-12\">
 				<button type='button' class='btn btn-info'
 				onclick='readOne(".$row['id'].")'>
 				<span class='fa fa-edit'></span>
 				</button>
 				<button type='button'
-					class='btn btn-danger'
-					onclick='confirmDelete(".$row['id'].")'>
-					<span class='fa fa-trash'></span>
+				class='btn btn-danger'
+				onclick='confirmDelete(".$row['id'].")'>
+				<span class='fa fa-trash'></span>
 				</button></div>";
 			}
 			else
-			if(intval($row["isAprove"])==1){
+			if($isAprove>=2&& (intval($row["isAprove"])<=1 && intval($row["isAprove"])>0 )){
 				$str="
 						<div class='col-sm-12'>
 						<button type='button' class='btn btn-success'
@@ -70,27 +64,25 @@ foreach ($data as $row) {
 						onclick='loadStatus(".$row['id'].")'>
 						<span class='fa fa-flag'></span>
 						</button></div>";
-			}else{
+			}else
+			if($isAprove>=2&&intval($row["isAprove"])>1){
 				$str="<div class=\"col-sm-12\">
 				<button type='button' class='btn btn-success'
 				onclick='readOneView(".$row['id'].")'>
 				<span class='fa fa-eye'></span>
 				</button></div>";
 			}
-			echo '<td>'.$row["expertType"].'</td>';
-			echo '<td>'.$row["yearPlan"].'</td>';
-			//$strT=$objT->getAproveStatus(intval($row['id']));
+			echo '<td>'.$row["expertType"].'</td>'."\n";
+			echo '<td>'.$row["yearPlan"].'</td>'."\n";
 			$strT=$objT->getAproveLog(intval($row['id']));
 
-			//echo '<td>'.$row["description"].'</td>';
-			//echo '<td>'.Format::getTextDate($row["createDate"]).'</td>';
-			echo '<td>'.$strT.'</td>';
-			echo '<td>'.$str.'</td>';
+			echo '<td>'.$strT.'</td>'."\n";
+			echo '<td>'.$str.'</td>'."\n";
 
 			
-			echo "</tr>";
+			echo "</tr>\n";
 }
-echo "</tbody>";
+echo "</tbody>\n";
 }
 ?>
 

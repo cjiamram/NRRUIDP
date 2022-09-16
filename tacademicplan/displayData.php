@@ -41,23 +41,28 @@ echo "<tbody>";
 $i=1;
 
 foreach ($data as $row) {
-		print_r($row["id"]);
+		//print_r($row["id"]);
 		echo "<tr>";
 			echo '<td>'.$i++.'</td>';
 			//echo '<td>'.$row["id"].'</td>';
-			if(intval($row["isAprove"])==0){
-				$str="<div class='col-sm-12'>
-				<button type='button' class='btn btn-info'
-				onclick='readOne(".$row['id'].")'>
-				<span class='fa fa-edit'></span>
-				</button>
-				<button type='button'
-				class='btn btn-danger'
-				onclick='confirmDelete(".$row['id'].")'>
-				<span class='fa fa-trash'></span>
-			</button></div>";}
+			
+			$isAprove =$objT->getLevelAprove(intval($row['id']));
+		
+			$str="";
+			if($isAprove<2||intval($row['isAprove'])>0){
+					$str="<div class='col-sm-12'>
+					<button type='button' class='btn btn-info'
+					onclick='readOne(".$row['id'].")'>
+					<span class='fa fa-edit'></span>
+					</button>
+					<button type='button'
+					class='btn btn-danger'
+					onclick='confirmDelete(".$row['id'].")'>
+					<span class='fa fa-trash'></span>
+					</button></div>";
+			}
 			else
-			if(intval($row["isAprove"])==1){
+			if($isAprove>=2&& (intval($row["isAprove"])<=1 && intval($row["isAprove"])>0 )  ){
 				$str="<div class='col-sm-12'>
 				<button type='button' class='btn btn-success'
 				onclick='readOneView(".$row['id'].")'>
@@ -66,17 +71,18 @@ foreach ($data as $row) {
 				onclick='loadStatus(".$row['id'].")'>
 				<span class='fa fa-flag'></span>
 				</button></div>";
-			}else{
+			}
+			else
+			if($isAprove>=2&&intval($row["isAprove"])>1)
+			{
 				$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
 				onclick='readOneView(".$row['id'].")'>
 				<span class='fa fa-eye'></span></div>";
 			}
-			echo '<td><div class="col-sm-12">'.$row["educationPlan"].'</div></td>';
+			echo '<td><div class="col-sm-12">'.$row["educationPlan"].'</div></td>'."\n";
 			echo '<td>'.$row["degree"].'</td>';
-			echo '<td>'.$row["yearPlan"]."/".number_format($row["budget"],2).'</td>';
-			echo '<td>'.$row["university"].'</td>';
-			//getAproveLog
-			//echo '<td>'.$objT->getAproveStatus(intval($row['id'])).'</td>';
+			echo '<td>'.$row["yearPlan"]."/".number_format($row["budget"],2).'</td>'."\n";
+			echo '<td>'.$row["university"].'</td>'."\n";
 			echo '<td>'.$objT->getAproveLog(intval($row['id'])).'</td>';
 			echo '<td>'.$str.'</td>';
 			echo "</tr>";

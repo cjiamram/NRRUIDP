@@ -92,6 +92,24 @@ class  tupposition{
 		return "";
 	}
 
+	public function getLevelAprove($idRequest){
+		$query="SELECT 
+			MAX(levelWork) AS MxId 
+		FROM t_supervisoraprove 
+		WHERE 
+			workType=3 AND 
+			idRequest=:idRequest AND 
+			statusAprove=1";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":idRequest",$idRequest);
+		$stmt->execute();
+		$row=$stmt->fetch(PDO::FETCH_ASSOC);
+		extract($row);
+		$mxId=intval($MxId);
+		return $mxId; 
+
+	}
+
 	public function setSelfAction($id,$status,$message){
 		$query="UPDATE t_upposition 
 		SET 

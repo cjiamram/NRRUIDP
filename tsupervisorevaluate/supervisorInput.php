@@ -42,7 +42,7 @@
 <div class="box">
 <div class="box box-warning">
 		<div class='form-group'>
-			<label class="col-sm-12"><?php echo $objLbl->getLabel("t_supervisorevaluate","departmentCode","th").":" ?>/คำค้น
+			<label class="col-sm-12">หน่วยงาน/คำค้น
 				</label>
 			
 			<div class="col-sm-6">
@@ -88,9 +88,9 @@
 			<label class="col-sm-12"><?php echo $objLbl->getLabel("t_supervisorevaluate","evaluateLevel","th").":" ?>/<?php echo $objLbl->getLabel("t_supervisorevaluate","depPosition","th").":" ?></label>
 			<div class="col-sm-6">
 				<select class="form-control" id='obj_evaluateLevel' >
-					<option value="1" >ระดับการประเมินที่ 1</option>
-					<option value="2">ระดับการประเมินที่ 2</option>
-					<option value="3">ระดับการประเมินที่ 3</option>
+					<option value="1" >ระดับการประเมินที่ 1 ผู้บังคับบัญชาขั้นต้น</option>
+					<option value="2">ระดับการประเมินที่ 2 ผู้บังคับบัญชาสูงสุด</option>
+					
 				</select>
 			</div>
 			<div class="col-sm-6">
@@ -350,6 +350,7 @@
 		var departmentCode=$("#obj_departmentCode").val();
 		var keyWord=$("#obj_keyWord").val();
 		var url	="<?=$rootPath?>/tstaffmigrate/displayData.php?departmentCode="+departmentCode+"&keyWord="+keyWord+"&supervisorCode="+$("#obj_userCode").val();
+		console.log(url);
 		$("#tblDisplay").load(url);
 	}
 

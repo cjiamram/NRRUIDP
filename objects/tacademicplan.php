@@ -47,6 +47,8 @@ class  tacademicplan{
 	}
 
 
+
+
 	public function getAproveLog($id){
 		$query="SELECT DISTINCT
 				A.isAprove,
@@ -61,12 +63,9 @@ class  tacademicplan{
 		INNER JOIN t_supervisoraprove D ON A.id=D.idRequest
 		INNER JOIN t_fullname E ON D.supervisorCode=E.`userCode` 
 		WHERE A.id=:id";
-		//print_r($query);
-		//print_r($id);
 		$stmt=$this->conn->prepare($query);
 		$stmt->bindParam(":id",$id);
 		$stmt->execute();
-		//print_r($id);
 		$i=1;
 		if($stmt->rowCount()>0){
 			$strT="<table width='100%' style='width:100%;' border='1'>\n";
@@ -269,6 +268,26 @@ class  tacademicplan{
 		$stmt->execute();
 		return $stmt;
 	}
+
+	public function getLevelAprove($idRequest){
+		$query="SELECT 
+			MAX(levelWork) AS MxId 
+		FROM t_supervisoraprove 
+		WHERE 
+			workType=1 AND 
+			idRequest=:idRequest AND 
+			statusAprove=1";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":idRequest",$idRequest);
+		$stmt->execute();
+		$row=$stmt->fetch(PDO::FETCH_ASSOC);
+		extract($row);
+		$mxId=intval($MxId);
+		return $mxId; 
+
+	}
+
+
 	function delete(){
 		$query='DELETE FROM t_academicplan WHERE id=:id';
 		$stmt = $this->conn->prepare($query);

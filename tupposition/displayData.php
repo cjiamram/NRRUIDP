@@ -60,8 +60,6 @@ foreach ($data as $row) {
 				</div>";
 			}
 
-			//$strT=$objT->getAproveStatus(intval($row['id']));
-			//print_r($strT."xxxxxxx");
 			$strT=$objT->getAproveLog(intval($row['id']));
 
 			echo '<td>'.$row["expertType"].'</td>';

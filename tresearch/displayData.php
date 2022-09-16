@@ -26,8 +26,8 @@ echo "<thead>";
 			echo "<th>No.</th>";
 			echo "<th>".$objLbl->getLabel("t_research","research","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_research","detail","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_research","yearPlan","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_research","researchSource","TH")."</th>";
+			echo "<th width='150px'>".$objLbl->getLabel("t_research","yearPlan","TH")."</th>";
+			echo "<th width='150px'>".$objLbl->getLabel("t_research","researchSource","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_research","isAprove","TH")."</th>";
 			echo "<th width=\"150px\">จัดการ</th>";
 
@@ -37,12 +37,15 @@ if(!isset($data["message"])){
 echo "<tbody>";
 $i=1;
 foreach ($data as $row) {
-		echo "<tr>";
+		echo "<tr>\n";
 
-			if(intval($row["isAprove"])==0){
 
+
+			$isAprove =$objT->getLevelAprove(intval($row['id']));
+			$str="";	
+
+			if($isAprove<2||intval($row['isAprove'])>0){
 				$str="<div class='col-sm-12'>
-			
 				<button type='button' class='btn btn-info'
 					onclick='readOne(".$row['id'].")'>
 					<span class='fa fa-edit'></span>
@@ -55,7 +58,7 @@ foreach ($data as $row) {
 				</div>";
 			}
 			else
-				if(intval($row["isAprove"])==1){
+			if($isAprove>=2&& (intval($row["isAprove"])<=1 && intval($row["isAprove"])>0)){
 					$str="
 						<div class='col-sm-12'>
 						<button type='button' class='btn btn-success'
@@ -66,25 +69,26 @@ foreach ($data as $row) {
 						onclick='loadStatus(".$row['id'].")'>
 						<span class='fa fa-flag'></span>
 						</button></div>";
-				}else{
+			}else
+			if($isAprove>=2&&intval($row["isAprove"])>1){
 					$str="<div class='col-sm-12'>
 						<button type='button' class='btn btn-success'
 						onclick='readOneView(".$row['id'].")'>
 						<span class='fa fa-eye'></span>
 						</button>
 				</div>";
-				}
-			echo '<td>'.$i++.'</td>';
-			echo '<td>'.$row["research"].'</td>';
-			echo '<td>'.$row["detail"].'</td>';
-			echo '<td>'.$row["yearPlan"].'</td>';
-			echo '<td>'.$row["researchSource"].'</td>';
+			}
+			echo '<td>'.$i++.'</td>'."\n";
+			echo '<td>'.$row["research"].'</td>'."\n";
+			echo '<td>'.$row["detail"].'</td>'."\n";
+			echo '<td>'.$row["yearPlan"].'</td>'."\n";
+			echo '<td>'.$row["researchSource"].'</td>'."\n";
 			$strT=$objT->getAproveLog(intval($row['id']));
-			echo '<td>'.$strT.'</td>';
-			echo '<td>'.$str.'</td>';
-			echo "</tr>";
+			echo '<td>'.$strT.'</td>'."\n";
+			echo '<td>'.$str.'</td>'."\n";
+			echo "</tr>\n";
 }
-echo "</tbody>";
+echo "</tbody>\n";
 }
 ?>
 <script>

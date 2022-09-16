@@ -35,10 +35,11 @@ echo "<tbody>";
 $i=1;
 foreach ($data as $row) {
 		echo "<tr>";
-			if(intval($row["isAprove"])==0){
-			$str="
-			<div class='col-sm-12'>
 			
+			$isAprove =$objT->getLevelAprove(intval($row['id']));
+			$str="";
+			if($isAprove<2||intval($row['isAprove'])>0){
+			$str="<div class='col-sm-12'>
 			<button type='button' class='btn btn-info'
 				onclick='readOne(".$row['id'].")'>
 				<span class='fa fa-edit'></span>
@@ -49,7 +50,7 @@ foreach ($data as $row) {
 				<span class='fa fa-trash'></span>
 			</button></div>";}
 			else
-				if(intval($row["isAprove"])==1){
+			if($isAprove>=2&& (intval($row["isAprove"])<=1 && intval($row["isAprove"])>0 )){
 					$str="
 						<div class='col-sm-12'>
 						<button type='button' class='btn btn-success'
@@ -60,7 +61,8 @@ foreach ($data as $row) {
 						onclick='loadStatus(".$row['id'].")'>
 						<span class='fa fa-flag'></span>
 						</button></div>";
-				}else{
+				}else
+				if($isAprove>=2&&intval($row["isAprove"])>1){
 						$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
 						onclick='readOneView(".$row['id'].")'>
 						<span class='fa fa-eye'></span>
