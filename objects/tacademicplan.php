@@ -25,6 +25,24 @@ class  tacademicplan{
 	public $message;
 	public $levelStatus;
 
+	public function getUserById($id){
+		$query="SELECT 
+			id,
+			userCode
+		FROM t_academicplan 
+		WHERE id=:id";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":id",$id);
+		$stmt->execute();
+		if($stmt->rowCount()>0){
+			$row=$stmt->fetch(PDO::FETCH_ASSOC);
+			extract($row);
+			return $userCode ;
+		}
+		return "";
+	}
+
+
 
 	public function getAproveStatus($id){
 		$query="SELECT A.isAprove,

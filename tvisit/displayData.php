@@ -42,7 +42,7 @@ foreach ($data as $row) {
 			$strT="";
 			
 
-			if($isAprove<2||intval($row['isAprove'])>0){
+			if($isAprove<2){
 
 			$str="<div class='col-sm-12'>
 			
@@ -69,7 +69,7 @@ foreach ($data as $row) {
 						</button></div>";
 			}
 			else
-			if($isAprove>=2&&intval($row["isAprove"])>1){
+			if($isAprove>=2){
 				$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
 				onclick='readView(".$row['id'].")'>
 				<span class='fa fa-eye'></span>

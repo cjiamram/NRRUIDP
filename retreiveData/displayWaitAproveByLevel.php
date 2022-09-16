@@ -47,14 +47,14 @@
 			echo "<td>".$row["yearPlan"]."</td>\n";
 			echo "<td>".$row["status"]."</td>\n";
 
-			if(intval($row["planStatus"])==0){
+			if(intval($row["planStatus"])==0|| intval($row["levelStatus"])<=2){
 			echo "<td>
 				<button type='button' class='btn btn-info'
 					onclick=\"setAprove(".$row["id"].",".$row["pTypeCode"].",'".$row["userCode"]."','".$row["fullName"]."','".$userCode."',".$row["levelStatus"].")\">
 					<span class='fa fa-handshake-o'></span>
 				</button></td>";
 			}else{
-				echo "<td>&nbsp;</td>\n";
+				echo "<td>ดำเนินการเรีบยบร้อยแล้ว</td>\n";
 			}
 			echo "</tr>\n";
 		}

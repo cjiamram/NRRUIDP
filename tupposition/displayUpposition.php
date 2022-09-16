@@ -40,7 +40,7 @@ foreach ($data as $row) {
 			echo '<td>'.$i++.'</td>'."\n";
 			
 			$isAprove =$objT->getLevelAprove(intval($row['id']));
-			if($isAprove<2||intval($row['isAprove'])>0){
+			if($isAprove<2){
 				$str="<div class=\"col-sm-12\">
 				<button type='button' class='btn btn-info'
 				onclick='readOne(".$row['id'].")'>
@@ -65,7 +65,7 @@ foreach ($data as $row) {
 						<span class='fa fa-flag'></span>
 						</button></div>";
 			}else
-			if($isAprove>=2&&intval($row["isAprove"])>1){
+			if($isAprove>=2){
 				$str="<div class=\"col-sm-12\">
 				<button type='button' class='btn btn-success'
 				onclick='readOneView(".$row['id'].")'>

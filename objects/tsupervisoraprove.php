@@ -77,9 +77,6 @@ class  tsupervisoraprove{
 	}
 
 
-	
-
-
 	public function getData($supervisorCode,$levelWork){
 
 		$query="SELECT  
