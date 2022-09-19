@@ -35,8 +35,10 @@ echo "<tbody>";
 $i=1;
 foreach ($data as $row) {
 		echo "<tr>";
-			
+			$isAprove =$objT->getLevelAprove(intval($row['id']));
+
 			$str="";
+			
 			if($isAprove===0 && intval($row["isAprove"])===0){
 							$str="<div class='col-sm-12'>
 									<button type='button' class='btn btn-info'
@@ -81,6 +83,7 @@ foreach ($data as $row) {
 									<span class='fa fa-trash'></span>
 									</button></div>";
 						}
+
 			
 			echo '<td>'.$i++.'</td>';
 			echo '<td>'.$row["improveSkill"].'</td>';
