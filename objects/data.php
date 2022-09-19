@@ -98,7 +98,6 @@
 				";
 				$Year=trim($Year); 
 				$Year="{$Year}%";
-				//print_r($Year);
 				$stmt=$this->conn->prepare($query);
 				$stmt->bindParam(":year",$Year);
 				$stmt->execute();
@@ -495,7 +494,6 @@
 
 				";
 
-				//print_r($query);
 
 
 				$stmt=$this->conn->prepare($query);
