@@ -28,14 +28,7 @@
 		$stafftypename=$data[0]["stafftypename"];
 		$staffGroup=intval($data[0]["staffGroup"]);
 		$graduated=$data[0]["graduated"];
-		//$graduated = array_unique($graduated);
-		//if(!isset($_SESSION["positionname"])){
-		//$_SESSION["positionname"]=$positionname;
-		//$_SESSION["departmentName"]=$departmentName;
-		//$_SESSION["workdepartmentname"]=$data[0]["workdepartmentname"];
-
-		//print_r($_SESSION["workdepartmentname"]);
-		//}
+	
 		if(!isset($_SESSION["staffGroup"])){
 			
 
@@ -46,7 +39,6 @@
 				$obj->create();
 			}
 
-			//print_r($_SESSION["DepartmentId"]);
 
 			if($_SESSION["DepartmentCode2"]==="011400"||$_SESSION["DepartmentCode2"]==="011300"||$_SESSION["DepartmentCode2"]==="011900"){
 						$_SESSION["isTeacher"]=1;

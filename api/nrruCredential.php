@@ -41,12 +41,7 @@
 						$_SESSION["DepartmentId"]=$row["departmentcode2"];}
 					}
 
-					/*if($_SESSION["DepartmentId"]=="011400"||$_SESSION["DepartmentId"]=="011300"||$_SESSION["DepartmentId"]=="011900"){
-						$_SESSION["isTeacher"]=1;
-
-					}else{
-						$_SESSION["isTeacher"]=0;
-					}*/
+				
 
 					echo json_encode(array("UserCode"=>$row["username"],"message"=>true)) ;
 
