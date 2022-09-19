@@ -46,7 +46,9 @@
 				$obj->create();
 			}
 
-			if($_SESSION["DepartmentId"]==="011400"||$_SESSION["DepartmentId"]==="011300"||$_SESSION["DepartmentId"]==="011900"){
+			//print_r($_SESSION["DepartmentId"]);
+
+			if($_SESSION["DepartmentCode2"]==="011400"||$_SESSION["DepartmentCode2"]==="011300"||$_SESSION["DepartmentCode2"]==="011900"){
 						$_SESSION["isTeacher"]=1;
 						$_SESSION["staffGroup"]=4;
 						

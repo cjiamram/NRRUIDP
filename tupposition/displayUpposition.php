@@ -20,7 +20,6 @@ $cnf=new Config();
 $userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
 $path="tupposition/getData.php?userCode=".$userCode;
 $url=$cnf->restURL.$path;
-//print_r($url);
 $api=new ClassAPI();
 $data=$api->getAPI($url);
 echo "<thead>";
@@ -39,39 +38,53 @@ foreach ($data as $row) {
 		echo "<tr>";
 			echo '<td>'.$i++.'</td>'."\n";
 			
-			$isAprove =$objT->getLevelAprove(intval($row['id']));
-			if($isAprove<2){
-				$str="<div class=\"col-sm-12\">
-				<button type='button' class='btn btn-info'
-				onclick='readOne(".$row['id'].")'>
-				<span class='fa fa-edit'></span>
-				</button>
-				<button type='button'
-				class='btn btn-danger'
-				onclick='confirmDelete(".$row['id'].")'>
-				<span class='fa fa-trash'></span>
-				</button></div>";
-			}
-			else
-			if($isAprove>=2&& (intval($row["isAprove"])<=1 && intval($row["isAprove"])>0 )){
-				$str="
-						<div class='col-sm-12'>
-						<button type='button' class='btn btn-success'
-						onclick='readOneView(".$row['id'].")'>
-						<span class='fa fa-eye'></span>
-						</button>
-						<button type='button' class='btn btn-warning'
-						onclick='loadStatus(".$row['id'].")'>
-						<span class='fa fa-flag'></span>
-						</button></div>";
-			}else
-			if($isAprove>=2){
-				$str="<div class=\"col-sm-12\">
-				<button type='button' class='btn btn-success'
-				onclick='readOneView(".$row['id'].")'>
-				<span class='fa fa-eye'></span>
-				</button></div>";
-			}
+			
+
+			if($isAprove===0 && intval($row["isAprove"])===0){
+							$str="<div class='col-sm-12'>
+									<button type='button' class='btn btn-info'
+									onclick='readOne(".$row['id'].")'>
+									<span class='fa fa-edit'></span>
+									</button>
+									<button type='button'
+									class='btn btn-danger'
+									onclick='confirmDelete(".$row['id'].")'>
+									<span class='fa fa-trash'></span>
+									</button></div>";
+						}
+						if($isAprove===1 && intval($row["isAprove"])===1){
+							$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
+									onclick='readOneView(".$row['id'].")'>
+									<span class='fa fa-eye'></span></div>";	
+						}
+
+						else
+					
+						
+						if($isAprove>=2&& intval($row["isAprove"])>=1){
+							$str="<div class='col-sm-12'>
+							<button type='button' class='btn btn-success'
+							onclick='readOneView(".$row['id'].")'>
+							<span class='fa fa-eye'></span>
+							<button type='button' class='btn btn-warning'
+							onclick='loadStatus(".$row['id'].")'>
+							<span class='fa fa-flag'></span>
+							</button></div>";
+						}
+
+						else
+						if(intval($row["isAprove"])===2)
+
+						{
+							$str="<div class='col-sm-12'>
+									
+									<button type='button'
+									class='btn btn-danger'
+									onclick='confirmDelete(".$row['id'].")'>
+									<span class='fa fa-trash'></span>
+									</button></div>";
+						}
+
 			echo '<td>'.$row["expertType"].'</td>'."\n";
 			echo '<td>'.$row["yearPlan"].'</td>'."\n";
 			$strT=$objT->getAproveLog(intval($row['id']));

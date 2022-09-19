@@ -34,13 +34,14 @@
 					$_SESSION["UserName"]=$row["username"];
 					$_SESSION["FullName"]=$row["firstname"].' '.$row["lastname"]  ;
 					$_SESSION["Picture"]=$row["picture"];
+					$_SESSION["DepartmentCode2"]=$row["departmentcode2"];
 					if($obj->isDepartmentHead($row["departmentcode1"])==false){
 						$_SESSION["DepartmentId"]=$row["departmentcode1"];}
 					else{
 						$_SESSION["DepartmentId"]=$row["departmentcode2"];}
 					}
 
-					/*if($_SESSION["DepartmentId"]==="011400"||$_SESSION["DepartmentId"]==="011300"||$_SESSION["DepartmentId"]==="011900"){
+					/*if($_SESSION["DepartmentId"]=="011400"||$_SESSION["DepartmentId"]=="011300"||$_SESSION["DepartmentId"]=="011900"){
 						$_SESSION["isTeacher"]=1;
 
 					}else{

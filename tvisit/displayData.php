@@ -43,19 +43,18 @@ foreach ($data as $row) {
 			
 
 			if($isAprove<2){
-
-			$str="<div class='col-sm-12'>
-			
-			<button type='button' class='btn btn-info'
+				$str="<div class='col-sm-12'>
+				<button type='button' class='btn btn-info'
 				onclick='readOne(".$row['id'].")'>
 				<span class='fa fa-edit'></span>
-			</button>
-			<button type='button'
+				</button>
+				<button type='button'
 				class='btn btn-danger'
 				onclick='confirmDelete(".$row['id'].")'>
 				<span class='fa fa-trash'></span>
-			</button>
-			</div>";}
+				</button>
+				</div>";
+			}
 			else
 			if($isAprove>=2&& (intval($row["isAprove"])<=1 && intval($row["isAprove"])>0) ){
 					$str="<div class='col-sm-12'>

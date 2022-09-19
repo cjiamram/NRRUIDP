@@ -27,7 +27,7 @@ echo "<thead>";
 			echo "<th>".$objLbl->getLabel("t_upposition","yearPlan","TH")."</th>";
 			echo "<th>".$objLbl->getLabel("t_upposition","isAprove","TH")."</th>";
 
-			echo "<th width=\"200px\">จัดการ</th>";
+			echo "<th width=\"150px\">จัดการ</th>";
 		echo "</tr>";
 echo "</thead>";
 if(!isset($data["message"])){

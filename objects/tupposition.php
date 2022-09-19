@@ -30,16 +30,29 @@ class  tupposition{
 	}
 
 	public function getAproveStatus($id){
-		$query="SELECT A.isAprove,
-		A.levelStatus,
-		B.status,
-		C.levelStatus FROM t_upposition  A 
-		INNER JOIN t_status B 
-		ON A.isAprove=B.code 
-		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
-		WHERE A.id=:id";
-		$stmt=$this->conn->prepare($query);
-		$stmt->bindParam(":id",$id);
+
+		$query="SELECT V.isAprove,
+		L.code AS levelStatusCode,
+		V.status,
+		V.aproveBy,
+		L.`levelStatus`
+		FROM 
+
+		(SELECT DISTINCT
+			A.isAprove,
+			B.status,
+			E.fullName AS aproveBy,
+			D.`levelWork`
+		FROM t_upposition  A 
+			INNER JOIN t_status B 
+			ON A.isAprove=B.code 
+			INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+			INNER JOIN t_supervisoraprove D ON A.id=D.idRequest
+			INNER JOIN t_fullname E ON D.supervisorCode=E.`userCode` 
+			WHERE A.id=:id
+		) AS V  
+		INNER JOIN   t_levelstatus L  
+		ON V.levelWork=L.code";
 		$stmt->execute();
 		if($stmt->rowCount()>0){
 			$row=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -49,20 +62,34 @@ class  tupposition{
 			return "";
 	}
 
+	
+
 	public function getAproveLog($id){
-		$query="SELECT DISTINCT
-				A.isAprove,
-				A.levelStatus AS levelStatusCode,
-				B.status,
-				C.levelStatus, 
-				E.fullName AS aproveBy
+
+		$query="SELECT DISTINCT V.isAprove,
+		L.code AS levelStatusCode,
+		V.status,
+		V.aproveBy,
+		L.`levelStatus`,
+		V.notification
+		FROM 
+
+		(SELECT DISTINCT
+			A.isAprove,
+			B.status,
+			E.fullName AS aproveBy,
+			D.`levelWork`,
+			D.notification
 		FROM t_upposition  A 
-		INNER JOIN t_status B 
-		ON A.isAprove=B.code 
-		INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
-		INNER JOIN t_supervisoraprove D ON A.id=D.idRequest
-		INNER JOIN t_fullname E ON D.supervisorCode=E.`userCode` 
-		WHERE A.id=:id";
+			INNER JOIN t_status B 
+			ON A.isAprove=B.code 
+			INNER JOIN t_levelstatus C ON A.levelStatus-1=C.code
+			INNER JOIN t_supervisoraprove D ON A.id=D.idRequest
+			INNER JOIN t_fullname E ON D.supervisorCode=E.`userCode` 
+			WHERE A.id=:id AND D.worktype=3
+		) AS V  
+		INNER JOIN   t_levelstatus L  
+		ON V.levelWork=L.code";
 		$stmt=$this->conn->prepare($query);
 		$stmt->bindParam(":id",$id);
 		$stmt->execute();
@@ -78,8 +105,8 @@ class  tupposition{
 			while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 				extract($row);
 				$strT.= "<tr>\n";
-				$strT.= "<td width='50px'>".$i++."</td>\n";
-				$strT.= "<td>".$row["status"]."</td>\n";
+				$strT.= "<td width='50px' align='center'>".$i++."</td>\n";
+				$strT.= "<td><a href='#'  title='".$notification."'>".$row["status"]."</a></td>\n";
 				$strT.= "<td>".$row["levelStatus"]."</td>\n";
 				$strT.= "<td>".$row["aproveBy"]."</td>\n";
 				$strT.= "</tr>\n";
