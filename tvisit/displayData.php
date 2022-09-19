@@ -91,7 +91,7 @@ foreach ($data as $row) {
 									<span class='fa fa-eye'></span></div>";
 						}
 
-			echo '<td>'.$isAprove."-".$row["isAprove"].'</td>';
+			echo '<td>'.$i++.'</td>';
 			echo '<td>'.$row["visitObjective"].'</td>';
 			echo '<td>'.$row["projectDetail"].'</td>';
 			echo '<td>'.$row["expectation"].'</td>';
