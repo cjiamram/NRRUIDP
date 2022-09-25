@@ -158,7 +158,7 @@
 
 function displayData(){
  
-    var url="<?=$rootPath?>/tupposition/displayUpposition.php?userCode="+$("#obj_userCode").val();
+    var url="<?=$rootPath?>/tupposition/displayUppositionJSON.php?userCode="+$("#obj_userCode").val();
     $("#tblDisplay").load(url);
  }
 

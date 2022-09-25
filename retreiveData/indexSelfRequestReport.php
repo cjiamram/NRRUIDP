@@ -25,7 +25,6 @@
       $dapartmentId=isset($_SESSION["DepartmentId"])?$_SESSION["DepartmentId"]:"";
       $userCode=isset($_SESSION["UserName"])?$_SESSION["UserName"]:"";
       $fullName=isset($_SESSION["FullName"])?$_SESSION["FullName"]:"";
-      //print_r($userCode);
       $sYear=date("Y")+543;
 ?>
 <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
@@ -96,8 +95,7 @@
 
 
 function displayData(){
-    var url="<?=$rootPath.'/'.$lastPath?>/displaySelfRequestReport.php?userCode=<?=$userCode?>&yearPlan="+$("#obj_yearNo").val()+"&staffId=<?=$staffId?>";
-    //console.log(url);
+    var url="<?=$rootPath.'/'.$lastPath?>/displaySelfRequestReportJSON.php?userCode=<?=$userCode?>&yearPlan="+$("#obj_yearNo").val()+"&staffId=<?=$staffId?>";
     $("#tblDisplay").load(url);
 
  }
@@ -123,8 +121,6 @@ function displayData(){
     $("#btnExport").click(function(){
        var url="<?=$rootPath?>/retreiveData/genPDF.php?userCode=<?=$userCode?>&yearPlan="+$("#obj_yearNo").val()+"&staffId=<?=$staffId?>";;
         window.open(url);
-       //$("#iframe").attr('src',url);
-      //createPDF();
     });
 
     

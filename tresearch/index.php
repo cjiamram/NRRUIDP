@@ -136,7 +136,7 @@
 
 
 function displayData(){
-    var url="<?=$rootPath?>/tresearch/displayData.php?userCode=<?=$userCode?>";
+    var url="<?=$rootPath?>/tresearch/displayDataJSON.php?userCode=<?=$userCode?>";
     $("#tblDisplay").load(url);
 
  }

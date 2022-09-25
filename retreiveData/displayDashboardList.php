@@ -91,12 +91,12 @@
   $("#obj_fYear").val(<?=$sYear+5?>);
 
   function displayData(){
-    var url="<?=$rootPath?>/retreiveData/displayReportPlan.php?departmentId="+$("#obj_department").val()+"&pType="+$("#obj_pType").val()+"&sYear="+$("#obj_sYear").val()+"&fYear="+$("#obj_fYear").val()+"&staffType="+$("#obj_staffType").val();
+    var url="<?=$rootPath?>/retreiveData/displayReportPlanJSON.php?departmentId="+$("#obj_department").val()+"&pType="+$("#obj_pType").val()+"&sYear="+$("#obj_sYear").val()+"&fYear="+$("#obj_fYear").val()+"&staffType="+$("#obj_staffType").val();
     $("#tblDisplay").load(url);
   }
 
    function exportData(){
-    var url="<?=$rootPath?>/retreiveData/ExportPlanXLS.php?departmentId="+$("#obj_department").val()+"&pType="+$("#obj_pType").val()+"&sYear="+$("#obj_sYear").val()+"&fYear="+$("#obj_fYear").val()+"&staffType="+$("#obj_staffType").val();
+    var url="<?=$rootPath?>/retreiveData/EportPlanXLSJSON.php?departmentId="+$("#obj_department").val()+"&pType="+$("#obj_pType").val()+"&sYear="+$("#obj_sYear").val()+"&fYear="+$("#obj_fYear").val()+"&staffType="+$("#obj_staffType").val();
     window.location.href = url;
   }
 

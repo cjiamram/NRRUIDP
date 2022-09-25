@@ -40,7 +40,7 @@
 	}
 
 	function displayLabel(){
-		var url ="<?=$rootPath?>/tlabel/displayLabel.php?tableName="+$("#obj_module").val();
+		var url ="<?=$rootPath?>/tlabel/displayLabelJSON.php?tableName="+$("#obj_module").val();
 		$("#tblDisplay").load(url);
 	}
 

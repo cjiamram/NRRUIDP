@@ -130,7 +130,7 @@ function loadStatus(id){
 
 function displayData(){
  
-    var url="<?=$rootPath?>/tsemina/displayData.php?userCode="+$("#obj_userCode").val();
+    var url="<?=$rootPath?>/tsemina/displayDataJSON.php?userCode="+$("#obj_userCode").val();
     $("#tblDisplay").load(url);
  }
 

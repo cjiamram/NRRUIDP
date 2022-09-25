@@ -178,7 +178,7 @@ function getAproveMessage(requestId,pType){
   var url="<?=$rootPath?>/retreiveData/getAproveMessage.php?requestId="+requestId+"&pType="+pType;
  
   var data=queryData(url);
-  console.log(data.message);
+  //console.log(data.message);
   Swal.fire(data.message);
 }
 
@@ -210,8 +210,7 @@ function loadInput(){
 }
 
 function displayData(){
-    //console.log("xxxxxxx");
-    var url="<?=$rootPath.'/'.$lastPath?>/displayAfterAprove.php?departmentId=<?=$dapartmentId?>&keyWord="+$("#txtSearch").val()+"&yearNo="+$("#obj_yearNo").val()+"&staffType="+$("#obj_staffType").val();
+    var url="<?=$rootPath.'/'.$lastPath?>/displayAfterAproveJSON.php?departmentId=<?=$dapartmentId?>&keyWord="+$("#txtSearch").val()+"&yearNo="+$("#obj_yearNo").val()+"&staffType="+$("#obj_staffType").val();
     $("#tblDisplay").load(url);
  }
 

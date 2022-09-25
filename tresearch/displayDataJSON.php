@@ -1,6 +1,4 @@
 <?php
-include_once "../config/config.php";
-include_once "../lib/classAPI.php";
 include_once "../config/database.php";
 include_once "../objects/classLabel.php";
 include_once "../objects/manage.php";
@@ -15,12 +13,35 @@ $database = new Database();
 $db = $database->getConnection();
 $objLbl = new ClassLabel($db);
 $objT=new tresearch($db);
-$cnf=new Config();
 $userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
-$path="tresearch/getData.php?userCode=".$userCode;
-$url=$cnf->restURL.$path;
-$api=new ClassAPI();
-$data=$api->getAPI($url);
+
+$data=array();
+
+$stmt = $objT->getData($userCode);
+$num = $stmt->rowCount();
+
+if($num>0){
+	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+				extract($row);
+				$objItem=array(
+					"id"=>$id,
+					"userCode"=>$userCode,
+					"research"=>$research,
+					"detail"=>$detail,
+					"createDate"=>$createDate,
+					"yearPlan"=>$yearPlan,
+					"isAprove"=>$isAprove,
+					"budget"=>$budget,
+					"budgetType"=>$budgetType,
+					"researchSource"=>$researchSource,
+					"status"=>$status
+				);
+				array_push($data, $objItem);
+			}
+}
+
+
+
 echo "<thead>";
 		echo "<tr>";
 			echo "<th>No.</th>";
@@ -33,7 +54,7 @@ echo "<thead>";
 
 		echo "</tr>";
 echo "</thead>";
-if(!isset($data["message"])){
+if(count($data)>0){
 echo "<tbody>";
 $i=1;
 foreach ($data as $row) {

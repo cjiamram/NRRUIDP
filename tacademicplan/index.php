@@ -135,7 +135,7 @@ function loadStatus(id){
 
 function displayData(){
  
-    var url="<?=$rootPath?>/tacademicplan/displayData.php?userCode="+$("#obj_userCode").val();
+    var url="<?=$rootPath?>/tacademicplan/displayDataJSON.php?userCode="+$("#obj_userCode").val();
     $("#tblDisplay").load(url);
  }
 
@@ -184,7 +184,6 @@ function displayData(){
 
 function getmessage(requestId,pType){
   var url="<?=$rootPath?>/taproverequest/getMessage.php?requestId="+requestId+"&pType="+pType;
-  //console.log(url);
   var data=queryData(url);
   return data.messageAprove;
 }
@@ -239,7 +238,6 @@ function readOneView(id){
       message:$("#obj_message").val()
      }
     var jsonData=JSON.stringify (jsonObj);
-    //console.log(jsonData);
     var flag=executeData(url,jsonObj,false);
     return flag;
  }

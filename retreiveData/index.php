@@ -23,7 +23,6 @@
       $lastPath=mb_basename($dir);
       
       $dapartmentId=isset($_SESSION["DepartmentId"])?$_SESSION["DepartmentId"]:"";
-      //print_r($dapartmentId);
       $userCode=isset($_SESSION["UserName"])?$_SESSION["UserName"]:"";
       $topic=$objLbl->getLabel("t_mgmreport","aproval","th");
       
@@ -205,7 +204,7 @@ function loadInput(){
 }
 
 function displayData(){
-    var url="<?=$rootPath.'/'.$lastPath?>/displayWaitAproveByLevel.php?userCode=<?=$userCode?>";
+    var url="<?=$rootPath.'/'.$lastPath?>/displayDataWaitAproveByLevelJSON.php?userCode=<?=$userCode?>";
     $("#tblDisplay").html("");
     $("#tblDisplay").load(url);
  }

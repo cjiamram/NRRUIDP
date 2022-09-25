@@ -1,10 +1,9 @@
 <?php
-include_once "../config/config.php";
-include_once "../lib/classAPI.php";
+//include_once "../config/config.php";
 include_once "../config/database.php";
 include_once "../objects/classLabel.php";
 include_once "../objects/manage.php";
-include_once "../objects/tresearch.php";
+include_once "../objects/tupposition.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: html/text; charset=UTF-8");
@@ -13,35 +12,51 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-With");
 $database = new Database();
 $db = $database->getConnection();
+$objT=new tupposition($db);
 $objLbl = new ClassLabel($db);
-$objT=new tresearch($db);
-$cnf=new Config();
 $userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
-$path="tresearch/getData.php?userCode=".$userCode;
-$url=$cnf->restURL.$path;
-$api=new ClassAPI();
-$data=$api->getAPI($url);
+
+$stmt = $objT->getData($userCode);
+$data=array();
+if($stmt->rowCount()>0){
+		$objArr=array();
+			while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+				extract($row);
+				$objItem=array(
+					"id"=>$id,
+					"expertType"=>$expertType,
+					"yearPlan"=>$yearPlan,
+					"description"=>$description,
+					"userCode"=>$userCode,
+					"createDate"=>$createDate,
+					"status"=>$status,
+					"isAprove"=>$isAprove
+				);
+				array_push($data, $objItem);
+			}
+}
 echo "<thead>";
 		echo "<tr>";
 			echo "<th>No.</th>";
-			echo "<th>".$objLbl->getLabel("t_research","research","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_research","detail","TH")."</th>";
-			echo "<th width='150px'>".$objLbl->getLabel("t_research","yearPlan","TH")."</th>";
-			echo "<th width='150px'>".$objLbl->getLabel("t_research","researchSource","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_research","isAprove","TH")."</th>";
-			echo "<th width=\"150px\">จัดการ</th>";
-
+			echo "<th>".$objLbl->getLabel("t_upposition","expertType","TH")."</th>";
+			echo "<th>".$objLbl->getLabel("t_upposition","yearPlan","TH")."</th>";
+			echo "<th>".$objLbl->getLabel("t_upposition","isAprove","TH")."</th>";
+			echo "<th width=\"200px\">จัดการ</th>";
 		echo "</tr>";
 echo "</thead>";
-if(!isset($data["message"])){
-echo "<tbody>";
+if(count($data)>0){
+echo "<tbody>\n";
 $i=1;
 foreach ($data as $row) {
-		echo "<tr>\n";
-			$isAprove =$objT->getLevelAprove(intval($row['id']));
-			$str="";	
+		echo "<tr>";
+			echo '<td>'.$i++.'</td>'."\n";
 
-			if($isAprove===0 && intval($row["isAprove"])===0){
+						$isAprove =$objT->getLevelAprove(intval($row['id']));
+						echo "<tr>";
+						echo '<td>'.$i++.'</td>';
+						$str="";
+					
+						if($isAprove===0 && intval($row["isAprove"])===0){
 							$str="<div class='col-sm-12'>
 									<button type='button' class='btn btn-info'
 									onclick='readOne(".$row['id'].")'>
@@ -86,19 +101,20 @@ foreach ($data as $row) {
 									</button></div>";
 						}
 
-			echo '<td>'.$i++.'</td>'."\n";
-			echo '<td>'.$row["research"].'</td>'."\n";
-			echo '<td>'.$row["detail"].'</td>'."\n";
+			echo '<td>'.$row["expertType"].'</td>'."\n";
 			echo '<td>'.$row["yearPlan"].'</td>'."\n";
-			echo '<td>'.$row["researchSource"].'</td>'."\n";
 			$strT=$objT->getAproveLog(intval($row['id']));
+
 			echo '<td>'.$strT.'</td>'."\n";
 			echo '<td>'.$str.'</td>'."\n";
+
+			
 			echo "</tr>\n";
 }
 echo "</tbody>\n";
 }
 ?>
+
 <script>
 		setTablePage("#tblDisplay",20);
 </script>

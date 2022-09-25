@@ -123,7 +123,7 @@
 
 function displayData(){
  
-    var url="<?=$rootPath.'/'.$lastPath?>/displayData.php??keyWord="+$("#txtSearch").val();
+    var url="<?=$rootPath.'/'.$lastPath?>/displayDataJSON.php??keyWord="+$("#txtSearch").val();
     $("#tblDisplay").load(url);
  }
 

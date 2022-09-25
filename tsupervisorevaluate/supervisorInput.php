@@ -349,8 +349,8 @@
 	function loadUser(){
 		var departmentCode=$("#obj_departmentCode").val();
 		var keyWord=$("#obj_keyWord").val();
-		var url	="<?=$rootPath?>/tstaffmigrate/displayData.php?departmentCode="+departmentCode+"&keyWord="+keyWord+"&supervisorCode="+$("#obj_userCode").val();
-		console.log(url);
+		var url	="<?=$rootPath?>/tstaffmigrate/displayDataJSON.php?departmentCode="+departmentCode+"&keyWord="+keyWord+"&supervisorCode="+$("#obj_userCode").val();
+		//console.log(url);
 		$("#tblDisplay").load(url);
 	}
 

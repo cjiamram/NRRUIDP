@@ -121,7 +121,7 @@
 
 function displayData(){
  
-    var url="<?=$rootPath.'/'.$lastPath?>/displayDataCriteria.php?keyWord="+$("#txtSearch").val();
+    var url="<?=$rootPath.'/'.$lastPath?>/displayDataCriteriaJSON.php?keyWord="+$("#txtSearch").val();
     $("#tblDisplay").load(url);
  }
 

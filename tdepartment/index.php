@@ -124,8 +124,8 @@
  }
 
 function displayData(){
-    var url="<?=$rootPath.'/'.$lastPath?>/displayDataCriteria.php?keyWord="+$("#txtSearch").val();
-    console.log(url);
+    var url="<?=$rootPath.'/'.$lastPath?>/displayDataCriteriaJSON.php?keyWord="+$("#txtSearch").val();
+   // console.log(url);
     $("#tblDisplay").load(url);
  }
 

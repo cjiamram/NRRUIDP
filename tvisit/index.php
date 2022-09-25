@@ -284,8 +284,7 @@ function saveData(){
 
 function displayData(){
  
-    var url="<?=$rootPath?>/tvisit/displayData.php?userCode="+$("#obj_userCode").val();
-    //console.log(url);
+    var url="<?=$rootPath?>/tvisit/displayDataJSON.php?userCode="+$("#obj_userCode").val();
     $("#tblDisplay").load(url);
  }
 

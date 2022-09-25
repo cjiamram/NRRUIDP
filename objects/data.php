@@ -931,7 +931,7 @@
 					WHERE
 					CONCAT(V.userCode,' ',C.fullName) LIKE :keyWord
 					AND 
-					((V.levelStatus=1 AND V.isAprove=0)
+					V.isAprove=0
 						OR 
 					(V.levelStatus>1 AND V.isAprove=1)) 
 					ORDER BY createDate DESC
@@ -955,7 +955,6 @@
 			WHERE  
 				userCode=:userCode
 			";
-			//print_r($query);
 			$stmt=$this->conn->prepare($query);
 			$stmt->bindParam(":userCode",$supervisorCode);
 			$stmt->execute();

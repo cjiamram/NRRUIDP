@@ -22,22 +22,7 @@ $url=$cnf->restURL.$path;
 //print_r($url);
 $api=new ClassAPI();
 $data=$api->getAPI($url);
-/*echo "<thead>";
-		echo "<tr>";
-			echo "<th>No.</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","educationPlan","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","degree","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","eduCertificate","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","budget","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","yearPlan","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","fundSource","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","sourceType","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","university","TH")."</th>";
-			echo "<th>".$objLbl->getLabel("t_academicplan","isAprove","TH")."</th>";
 
-			echo "<th>จัดการ</th>";
-		echo "</tr>";
-echo "</thead>";*/
 if(!isset($data["message"])){
 echo "<tbody>";
 $i=1;
