@@ -50,6 +50,21 @@ class  tunderevaluate{
 		$flag=$stmt->execute();
 		return $flag;
 	}
+
+	public function deleteBySupervisor($departmentCode,$supervisorCode){
+		$query="DELETE FROM t_underevaluate 
+		WHERE departmentCode=:departmentCode AND 
+		supervisorCode=:supervisorCode
+		";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":departmentCode",$departmentCode);
+		$stmt->bindParam(":supervisorCode",$supervisorCode);
+		$flag=$stmt->execute();
+		return $flag;
+
+	}
+
+
 	public function readOne(){
 		$query='SELECT  id,
 			supervisorCode,

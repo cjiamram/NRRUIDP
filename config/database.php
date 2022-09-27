@@ -4,8 +4,8 @@ class Database{
     // specify your own database credentials
     private $host = "localhost";
     private $db_name = "dbimprovement";
-    //private $username = "root";
-    //private $password = "Nrruspare@2017";
+    //private $username = "cjiamram";
+    //private $password = "Bangy123#";
     private $username = "root";
     private $password = "";
     public $conn;

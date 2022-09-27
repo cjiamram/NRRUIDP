@@ -1,11 +1,8 @@
-
 var full = location.pathname;
 var res = full.split("/");
-var rootPath="http://localhost"+"/"+res[1];
+var projectPath="/"+res[1];
 function getChildMenu(parentMenu){
-   var url=rootPath+"/menu/getChildMenu.php?parent="+parentMenu;
-   //console.log(url);
-
+   var url="./menu/getChildMenu.php?parent="+parentMenu;
    var data=queryData(url);
    var row="<ul class=\"treeview-menu\">";
    var i=0;
@@ -18,12 +15,19 @@ function getChildMenu(parentMenu){
    return row;
 } 
 
+
+
+
+
 function clickMenu(link){
-  $("#dvMain").load(link);
+    $("#dvMain").css({"display":"block"});
+    $("#dvMain1").css({"display":"none"});
+
+    $("#dvMain").load(link);
 }
 
 function getHeadMenu(menuPane){
-   var url=rootPath+"/menu/getHeadMenu.php";
+   var url="./menu/getHeadMenu.php";
    var data=queryData(url);
    var row="";
    var i=0;
@@ -45,6 +49,6 @@ function getHeadMenu(menuPane){
   row+="<span class=\"pull-right-container\">\n";
   row+="</span></a>\n";
   row+="</li>\n";
-
    $(menuPane).html(row);
+
 }

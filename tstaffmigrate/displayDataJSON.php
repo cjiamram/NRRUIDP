@@ -12,16 +12,10 @@
 	$obj1=new tunderevaluate($db);
 	$obj = new tstaffmigrate($db);
 
-	//$cnf=new Config();
-	//$api=new ClassAPI();
 	$departmentCode=isset($_GET["departmentCode"]) ? $_GET["departmentCode"] : "";
     $supervisorCode=isset($_GET["supervisorCode"]) ? $_GET["supervisorCode"] : "";
     $keyWord=isset($_GET["keyWord"]) ? $_GET["keyWord"] : "";
 
-	//$url=$cnf->restURL."tstaffmigrate/getData.php?departmentCode=".$departmentCode."&keyWord=".$keyWord	;
-	//print_r($url);
-	//$data=$api->getAPI($url);
-	//print_r($data);
 
     $stmt = $obj->getData($departmentCode,$keyWord);
     $num = $stmt->rowCount(); 
@@ -31,7 +25,6 @@
     	while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 				extract($row);
 				$objItem=array(
-					"id"=>$id,
 					"staffCode"=>$staffCode,
 					"userCode"=>$userCode,
 					"stafffullname"=>$stafffullname,
@@ -58,7 +51,7 @@
 			echo "<th>หน่วยงานย่อย</th>\n";
 		echo "</tr>\n";
 		echo "</thead>\n";
-		echo "<tbody>\n";
+		echo "<tbody >\n";
 		$i=1;
 		foreach ($data as $row) {
 			$objs=explode(" ",$row["stafffullnameeng"]);

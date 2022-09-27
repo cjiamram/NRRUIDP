@@ -33,7 +33,7 @@
 				foreach ($objArr as $row) {
 					
 					$objs=explode(" ",$row["stafffullnameeng"]);
-					$userCode=$objs[0].".".substr($objs[1],0,1);
+					$userCode=$row["usercode"];
 					$objStaff->staffCode=$row["staffcode"];
 					$objStaff->userCode=$userCode;
 					$objStaff->stafffullname=$row["stafffullname"];

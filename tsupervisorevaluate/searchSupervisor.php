@@ -17,7 +17,7 @@
 		echo "<th>ชื่อสกุล</th>\n";
 		echo "<th>เลือก</th>\n";
 		echo "</thead>\n";
-		echo "<tbody>\n";
+		echo "<tbody >\n";
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 			extract($row);
 			echo "<tr>\n";

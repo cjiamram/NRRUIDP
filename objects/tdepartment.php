@@ -82,6 +82,28 @@ class  tdepartment{
 		return $stmt;
 	}
 
+	
+	public function getHeadDepartment(){
+		$query="SELECT  id,
+			departmentId,
+			departmentName
+		FROM t_department WHERE isHead=0 ";
+		$stmt=$this->conn->prepare($query);
+		$stmt->execute();
+		return $stmt;
+	}
+
+	public function getChildDepartment($parent){
+		$query="SELECT  id,
+			departmentId AS childId,
+			departmentName AS childName
+		FROM t_department WHERE isHead=1 AND parent=:parent";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":parent",$parent);
+		$stmt->execute();
+		return $stmt;
+	}
+
 	public function getData(){
 		$query='SELECT  id,
 			departmentId,

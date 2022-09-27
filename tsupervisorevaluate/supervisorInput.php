@@ -22,7 +22,13 @@
 <script src="<?=$rootPath?>/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?=$rootPath?>/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
-
+<style> 
+div.scrollBox {
+  height: 500px;
+  width: 100%;
+  overflow-y: scroll;
+}
+</style>
 
 <input type="hidden" id="obj_id" value="">
 <section class="content-header">
@@ -68,10 +74,15 @@
 							placeholder='<?=$objLbl->getLabel("t_supervisorevaluate","userCode","th")?>'>
 
 			   		</td>
-			   		<td width='50px'>
-			   				<input type="button" id="btnSearch"  class="btn btn-success pull-right"  value="ค้นหา">
-
+			   		<td width='150px'>
+			   				<div id="dvSearchButton">
+			   				<a href='#' id="btnSearch" class='btn btn-success'><i class="fa fa-search" aria-hidden="true"></i>&nbsp;ค้นหา<a>
+			   				</div>
+			   				<div id="dvDelButton" style="display:none">
+			   				<a href='#' id="btnDel" class='btn btn-danger'><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;ลบ<a>
+			   				</div>
 			   		</td>
+			   		
 			   	</tr>
 			   </table>
 
@@ -100,7 +111,7 @@
 			</div>
 		</div>
 		
-		<div class="form-group">&nbsp;
+		<div class="form-group"><hr>
 		</div>
 
 		<div class="modal-footer">
@@ -113,16 +124,25 @@
 <div class="box box-warning">
 <div class="form-group">
 	<div class="col-sm-1">
-		<label>คำค้น</label>
+		<label>กรองข้อมูล</label>
 	</div>
-	<div class="col-sm-6">
-		<input type="text" class="form-control" id="obj_keyWord">
+	<div class="col-sm-3">
+		<input type="text" placeholder='[user name/ชื่อ-สกุล/]*' class="form-control" id="obj_keyWord">
 	</div>
-	<div class="col-sm-5">&nbsp;
+	<div class="col-sm-3">
+		<select id="obj_departmentFilter" class="form-control">
+
+		</select>
 		
 	</div>
+	<div class="col-sm-5">&nbsp;
+	</div>
 </div>
-<table id="tblDisplay" class="table table-bordered table-hover"></table>
+<div class='scrollBox'>
+<table id="tblDisplay"   class="table table-bordered table-hover ">
+
+</table>
+</div>
 </div>
 </div>
 
@@ -147,9 +167,28 @@
 
 <script>
 
-   /*function deleteByLevel(departmentCode,levelEvaluate){
 
-   }*/
+
+   function deleteSupervisor(){
+   		
+   		if($("#obj_userCode").val()!==""&&$("#obj_departmentCode").val()!=="" ){
+		   		var url="<?=$rootPath?>/tsupervisorevaluate/deleteSupervisor.php?userCode="+$("#obj_userCode").val()+"&departmentCode="+$("#obj_departmentCode").val();
+		   		var flag=executeGet(url);
+
+		   		url="<?=$rootPath?>/tunderevaluate/deleteBySupervisor.php?supervisorCode="+$("#obj_userCode").val()+"&departmentCode="+$("#obj_departmentCode").val();
+		   		flag&=executeGet(url);
+		   		displayUser();
+   		}else{
+		   		 swal.fire({
+					title: "กรุณาระบุหน่วยงานและชื่อของผู้ประเมินให้ถูกต้อง!",
+					type: "error",
+					buttons: [false, "ปิด"],
+					dangerMode: true,
+				});
+
+   		}
+
+   }
 
    function saveUnder(userCode,index){
    		
@@ -206,7 +245,7 @@
 			supervisorName:$("#obj_supervisorName").val()
 		}
 		var jsonData=JSON.stringify (jsonObj);
-		console.log(jsonData);
+		//console.log(jsonData);
 		var flag=executeData(url,jsonObj,false);
 		return flag;
 	}
@@ -251,7 +290,8 @@
 
 	function deleteByLevel(){
 		var url="<?=$rootPath?>/tunderevaluate/deleteByLevel.php?departmentCode="+$("#departmentCode").val()+"&evaluateLevel="+$("#obj_evaluateLevel").val();
-		executeGet(url);
+		var flag=executeGet(url);
+		return flag;
 
 	}
 
@@ -287,10 +327,10 @@
 		}
 		}else{
 			swal.fire({
-			title: "รูปแบบการกรอกข้อมูลไม่ถูกต้อง",
-			type: "error",
-			buttons: [false, "ปิด"],
-			dangerMode: true,
+				title: "รูปแบบการกรอกข้อมูลไม่ถูกต้อง",
+				type: "error",
+				buttons: [false, "ปิด"],
+				dangerMode: true,
 			});
 			}
 	}
@@ -350,15 +390,24 @@
 		var departmentCode=$("#obj_departmentCode").val();
 		var keyWord=$("#obj_keyWord").val();
 		var url	="<?=$rootPath?>/tstaffmigrate/displayDataJSON.php?departmentCode="+departmentCode+"&keyWord="+keyWord+"&supervisorCode="+$("#obj_userCode").val();
-		//console.log(url);
 		$("#tblDisplay").load(url);
+	}
+
+	function filterStaff(){
+		var departmentCode=$("#obj_departmentFilter").val();
+		var keyWord=$("#obj_keyWord").val();
+		var url	="<?=$rootPath?>/tstaffmigrate/displayDataJSON.php?departmentCode="+departmentCode+"&keyWord="+keyWord+"&supervisorCode="+$("#obj_userCode").val();
+		$("#tblDisplay").load(url);
+
 	}
 
 
 
 	function listDepartment(){
-		var url="<?=$rootPath?>/tdepartment/getData.php";
+		var url="<?=$rootPath?>/tdepartment/getHierachyData.php";
 		setDDLPrefix(url,"#obj_departmentCode","***เลือกหน่วยงาน***");
+		setDDLPrefix(url,"#obj_departmentFilter","***เลือกหน่วยงาน***");
+
 	}
 
 	function getHasUnder(departmentCode,levelEvaluate){
@@ -378,10 +427,13 @@
 	function displayUser(){
 		var flag= getHasSupervisor();
 		if(flag===true){
-
+			$("#dvDelButton").attr('style','display:block');
+			$("#dvSearchButton").attr('style','display:none');
 			$("#dvUnder").attr('style','display:block');
 		}else
 		{
+			$("#dvDelButton").attr('style','display:none');
+			$("#dvSearchButton").attr('style','display:block');
 			$("#dvUnder").attr('style','display:none');
 		}
 	}
@@ -399,9 +451,17 @@
 		listDepartment();
 		displayUser();
 
+		$("#obj_departmentFilter").val($("#obj_departmentCode").val());
+
 		$("#obj_keyWord").change(function(){
-			loadUser();
+			filterStaff();
 		});
+
+		$("#obj_departmentFilter").change(function(){
+			filterStaff();
+		});
+			
+		
 
 
 		$("#chkAll").click(function(){
@@ -417,8 +477,17 @@
 		});
 
 		$("#obj_departmentCode").change(function(){
+			
+			$("#obj_userCode").val("");
+			$("#obj_supervisorName").val("");
+			$("#obj_departmentFilter").val($("#obj_departmentCode").val());
+
 			getSupervisor();
 			loadUser();
+		});
+
+		$("#btnDel").click(function(){
+			deleteSupervisor();
 		});
 
 		$("#btnSearch").click(function(){

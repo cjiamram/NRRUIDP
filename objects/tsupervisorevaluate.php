@@ -103,7 +103,6 @@ class  tsupervisorevaluate{
 		$stmt->bindParam(":depPosition",$this->depPosition);
 		$stmt->bindParam(":createDate",$this->createDate);
 		$stmt->bindParam(":supervisorName",$this->supervisorName);
-		//$stmt->bindParam(":levelEvaluate",$this->levelEvaluate);
 		$stmt->bindParam(":id",$this->id);
 		$flag=$stmt->execute();
 		return $flag;
@@ -139,6 +138,17 @@ class  tsupervisorevaluate{
 		$stmt->bindParam(':keyWord',$keyWord);
 		$stmt->execute();
 		return $stmt;
+	}
+
+	function deleteSupervisor($departmentCode,$userCode){
+		$query="DELETE FROM t_supervisorevaluate 
+		WHERE userCode=:userCode AND departmentCode=:departmentCode";
+		$stmt = $this->conn->prepare($query);
+		$stmt->bindParam(':departmentCode',$departmentCode);
+		$stmt->bindParam(':userCode',$userCode);
+		$flag=$stmt->execute();
+		return $flag;
+
 	}
 	
 	function deleteByLevel($departmentCode,$levelEvaluate){

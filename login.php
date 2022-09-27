@@ -129,7 +129,7 @@
             if(data.message===true){
                 url="<?=$rootPath?>/menu/setMenuDefault.php?UserCode="+$("#txtUser").val();
                 flag=executeGet(url);
-                $(location).attr('href','index.php');
+                $(location).attr('href','credentialReceive.php?userCode='+$("#txtUser").val());
             }else
             {
               swal.fire({

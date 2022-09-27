@@ -75,13 +75,12 @@ class  tstaffmigrate{
 	
 
 	public function getDataByUser($keyWord){
-		$query="SELECT  id,
+		$query="SELECT  DISTINCT
 			staffCode,
 			userCode,
 			stafffullname,
-			stafffullnameeng,
-			departmentcode,
-			departmentcode1
+			stafffullnameeng
+			
 		FROM t_staffmigrate 
 		WHERE 
 		
@@ -97,8 +96,7 @@ class  tstaffmigrate{
 	}
 
 	public function getData($departmentCode,$keyWord){
-		//$keyWord="%{$keyWord}%";
-		$query="SELECT  id,
+		$query="SELECT DISTINCT
 			staffCode,
 			userCode,
 			stafffullname,
@@ -107,7 +105,7 @@ class  tstaffmigrate{
 			departmentcode1
 		FROM t_staffmigrate 
 		WHERE 
-			departmentCode = :departmentCode
+			(departmentCode = :departmentCode || departmentcode1 LIKE :departmentcode1 )
 		AND 
 			CONCAT(stafffullname,' ',stafffullnameeng,' ',staffCode)
 			LIKE :keyWord
@@ -115,7 +113,10 @@ class  tstaffmigrate{
 		";
 		$stmt = $this->conn->prepare($query);
 		$keyWord="%{$keyWord}%";
+		$departmentcode1=substr($departmentCode,0,4)."%";
 		$stmt->bindParam(':departmentCode',$departmentCode);
+		$stmt->bindParam(':departmentcode1',$departmentcode1);
+
 		$stmt->bindParam(':keyWord',$keyWord);
 		$stmt->execute();
 		return $stmt;

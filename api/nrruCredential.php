@@ -21,7 +21,7 @@
 	
 	$jsonObj=json_encode($postObj);
 	$api=new ClassAPI();
-	$url="http://nrruapp.nrru.ac.th/NRRUCredential/NRRUCredential.php";
+	$url="https://cos.nrru.ac.th/NRRUCredential/NRRUCredential.php";
 	$user=$api->postAPI($url,$jsonObj); 
 
 	//print_r($user);
