@@ -20,8 +20,10 @@
 	);
 	$data = $client->call("getUserLogin",$params); 
 	$obj = json_decode($data);
+
+	print_r($obj);
 	
-	if($count($obj)>0){
+	if(count($obj)>0){
 		$user=$obj[0];
 		if(intval($user->staffstatus)>0){
 						$_SESSION["staffid"]=$user->staffid	;
