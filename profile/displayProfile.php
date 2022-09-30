@@ -41,8 +41,17 @@
 
 
 			if($_SESSION["DepartmentCode2"]==="011400"||$_SESSION["DepartmentCode2"]==="011300"||$_SESSION["DepartmentCode2"]==="011900"){
-						$_SESSION["isTeacher"]=1;
-						$_SESSION["staffGroup"]=4;
+						
+						if(intval($_SESSION["staffGroup"])===1){
+							$_SESSION["staffGroup"]=4;
+							$_SESSION["isTeacher"]=1;
+						}
+						else{
+							$_SESSION["staffGroup"]=$_SESSION["staffGroup"];
+							$_SESSION["isTeacher"]=0;	
+						}
+
+						
 						
 					}else{
 						$_SESSION["isTeacher"]=0;

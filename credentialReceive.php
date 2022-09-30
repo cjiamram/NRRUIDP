@@ -14,14 +14,19 @@
 	$userCode=isset($_GET["userCode"])?$_GET["userCode"]:"";
 	$client = new nusoap_client("http://entrance.nrru.ac.th/nrruwebservice/nrruWebService_SSO.php?wsdl",true);
 	$obj->setPrivillageDefault($userCode);
-
+	//print_r($userCode);
 	$params = array(
 		'userlogin' => $userCode
 	);
 	$data = $client->call("getUserLogin",$params); 
 	$obj = json_decode($data);
 
-	print_r($obj);
+	if($userCode===""){
+		header("location:messageNotify.php");
+	}
+
+
+	//print_r($obj);
 	
 	if(count($obj)>0){
 		$user=$obj[0];
@@ -32,6 +37,7 @@
 						$_SESSION["FullName"]=$user->firstname.' '.$user->lastname  ;
 						$_SESSION["Picture"]=$user->picture;
 						$_SESSION["DepartmentId"]=$user->departmentcode1;
+						
 						header("location:page.php");
 		} 
 	}else{

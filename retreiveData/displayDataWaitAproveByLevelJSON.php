@@ -1,5 +1,5 @@
 <?php
-	header("content-type:html/text;charset=UTF-8");
+	header("content-type:text/html;charset=UTF-8");
 
 	include_once "../objects/manage.php";
 	include_once "../objects/classLabel.php";

@@ -891,56 +891,34 @@
 
 	public function getWaitAproveByLevel($supervisorCode,$keyWord){
 		$data=$this->getbySupervisor($supervisorCode);
-		$query="SELECT
-			    	V.id, 
-			    	V.userCode,
-			    	C.fullName,
-			    	B.pType,
-			    	V.pType AS pTypeCode,
-			    	V.Topic,
-			    	V.description,
-			    	V.budget,
-			    	V.departmentId,
-			    	V.createDate,
-			    	V.yearPlan,
-			    	IF(YEAR((CURDATE())+543>V.yearPlan AND V.isAprove=1),
-						5,V.isAprove) AS planStatus,
-			    	V.levelStatus 
-					FROM (
-						SELECT id,1 AS pType, userCode,CONCAT(educationPlan,' ',eduCertificate) AS 
-						Topic,description,budget,departmentId,createDate,yearPlan,isAprove,levelStatus
-						FROM t_academicplan WHERE departmentId=:departmentCode AND levelStatus=:status
-					UNION 
-						SELECT id,2 AS pType,userCode,research AS Topic,detail AS description,budget,departmentId,createDate,yearPlan,isAprove,levelStatus
-						FROM t_research WHERE departmentId=:departmentCode AND levelStatus=:status
-					UNION 
-						SELECT A.id,3 AS pType,A.userCode,B.specialize AS Topic,A.description,0 AS budget,A.departmentId,A.createDate,A.yearPlan,A.isAprove,A.levelStatus
-						FROM t_upposition A 
-						LEFT OUTER JOIN t_specialize B ON A.expertType=B.code
-						WHERE A.departmentId=:departmentCode AND A.levelStatus=:status
-					UNION 
-						SELECT id,4 AS pType,userCode,improveSkill AS Topic,improveOpjective AS description,budget,departmentid,createDate,yearPlan,isAprove,levelStatus 
-						FROM t_semina 
-						WHERE departmentId=:departmentCode AND levelStatus=:status
-					UNION 
-						SELECT id,5 AS pType,userCode,visitObjective AS Topic,projectDetail AS description,budget,departmentid,createDate,yearPlan,isAprove,levelStatus 
-						FROM t_visit WHERE departmentId=:departmentCode AND levelStatus=:status ) 
-					AS V 
-					LEFT OUTER JOIN t_ptype B ON V.ptype=B.code 
-					LEFT OUTER JOIN t_fullname C ON V.userCode=C.userCode
-					WHERE
-					CONCAT(V.userCode,' ',C.fullName) LIKE :keyWord
-					AND 
-					V.isAprove=0
-						OR 
-					(V.levelStatus>1 AND V.isAprove=1)) 
-					ORDER BY createDate DESC
+		//print_r($data);
+		$query="SELECT V.id, V.userCode, C.fullName, B.pType, V.pType AS pTypeCode, V.Topic, V.description, V.budget, V.departmentId, V.createDate, V.yearPlan, IF(YEAR((CURDATE())+543>V.yearPlan AND V.isAprove=1), 5,V.isAprove) AS planStatus, V.levelStatus FROM 
+			( 
+					 SELECT id,1 AS pType, userCode,CONCAT(educationPlan,' ',eduCertificate) AS Topic,description,budget,departmentId,createDate,yearPlan,isAprove,levelStatus FROM t_academicplan WHERE departmentId=:departmentCode AND levelStatus=:status
+					 UNION 
+					 SELECT id,2 AS pType,userCode,research AS Topic,detail AS description,budget,departmentId,createDate,yearPlan,isAprove,levelStatus FROM t_research WHERE departmentId=:departmentCode AND levelStatus=:status 
+					 UNION 
+					 SELECT A.id,3 AS pType,A.userCode,B.specialize AS Topic,A.description,0 AS budget,A.departmentId,A.createDate,A.yearPlan,A.isAprove,A.levelStatus FROM t_upposition A LEFT OUTER JOIN t_specialize B ON A.expertType=B.code WHERE A.departmentId=:departmentCode AND A.levelStatus=:status 
+					 UNION 
+					 SELECT id,4 AS pType,userCode,improveSkill AS Topic,improveOpjective AS description,budget,departmentid,createDate,yearPlan,isAprove,levelStatus FROM t_semina WHERE  departmentId=:departmentCode AND levelStatus=:status 
+					 UNION 
+					 SELECT id,5 AS pType,userCode,visitObjective AS Topic,projectDetail AS description,budget,departmentid,createDate,yearPlan,isAprove,levelStatus FROM t_visit WHERE departmentId=:departmentCode AND levelStatus=:status
+					 
+			 ) AS V 
+			 
+			 	LEFT OUTER JOIN t_ptype B ON V.ptype=B.code 
+			 	LEFT OUTER JOIN t_fullname C ON V.userCode=C.userCode 
+			 	WHERE CONCAT(V.userCode,' ',C.fullName) LIKE :keyWord 
+			 	AND V.isAprove=0 OR (V.levelStatus>1 AND V.isAprove=1)
+ 				ORDER BY V.createDate DESC
 			";
+
+			$keyWord="%{$keyWord}%";
+
 		
 			$stmt=$this->conn->prepare($query);
 			$stmt->bindParam(":departmentCode",$data["departmentCode"]);
 			$stmt->bindParam(":status",$data["evaluateLevel"]);
-			$keyWord="%{$keyWord}%";
 			$stmt->bindParam(":keyWord",$keyWord);
 			$stmt->execute();
 			return $stmt;

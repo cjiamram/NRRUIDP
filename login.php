@@ -119,7 +119,7 @@
       };
       var jsonData=JSON.stringify (jsonObj);
       var data=executeData(url,jsonObj);
-      if(data.flag==true){
+      if(data.flag===true){
         $(location).attr('href','index.php');
       }
       else

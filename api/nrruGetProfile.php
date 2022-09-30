@@ -20,12 +20,12 @@
 				foreach($result["degree"] as $res){
 
 					 $objItem=array(
-			        "degreelevel" => $res["degreelevelname"],
-			        "graduatedatetime" => $res["graduatedatetime"],
-			        "degreename" => $res["degreelevelname"],
-			        "majorname" => $res["majorname"],
-			        "universityname" => $res["universityname"],
-			        "countryname" => "THAILAND"
+					        "degreelevel" => $res["degreelevelname"],
+					        "graduatedatetime" => $res["graduatedatetime"],
+					        "degreename" => $res["degreelevelname"],
+					        "majorname" => $res["majorname"],
+					        "universityname" => $res["universityname"],
+					        "countryname" => "THAILAND"
 			        
 			      
 		    	);

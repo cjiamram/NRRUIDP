@@ -79,8 +79,8 @@
 <script>
 	function clickSignon(){
 		//var url="https://cos.nrru.ac.th/php-azure/authen.php?workId=ef1b78c8956a320ea6dac224855bc992c9d3669f";
-		//var url="http://localhost/NRRUIDP/login.php?workId=ef1b78c8956a320ea6dac224855bc992c9d3669f";
 		var url="http://localhost/NRRUIDP/login.php?workId=ef1b78c8956a320ea6dac224855bc992c9d3669f";
+		//var url="https://cos.nrru.ac.th/NRRUIDP/login.php?workId=ef1b78c8956a320ea6dac224855bc992c9d3669f";
 
 		window.location.replace(url);
 	}
