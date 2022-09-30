@@ -45,5 +45,5 @@ clear(false);
 		}
 
 		deleteAllCookies();
-		window.location.assign('<?=$cnf->restURL?>');
+		window.location.assign('https://cos.nrru.ac.th/NRRUIDP/');
 </script>

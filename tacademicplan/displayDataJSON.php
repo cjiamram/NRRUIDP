@@ -90,7 +90,7 @@
 									onclick='confirmDelete(".$row['id'].")'>
 									<span class='fa fa-trash'></span>
 									</button></div>";
-						}
+						}else
 						if($isAprove===1 && intval($row["isAprove"])===1){
 							$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
 									onclick='readOneView(".$row['id'].")'>
@@ -112,16 +112,22 @@
 						}
 
 						else
-						if(intval($row["isAprove"])===2)
-
-						{
-							$str="<div class='col-sm-12'>
+						if(intval($row["isAprove"])===2){
+							/*$str="<div class='col-sm-12'>
 									
 									<button type='button'
 									class='btn btn-danger'
 									onclick='confirmDelete(".$row['id'].")'>
 									<span class='fa fa-trash'></span>
-									</button></div>";
+									</button></div>";*/
+								$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
+									onclick='readOneView(".$row['id'].")'>
+									<span class='fa fa-eye'></span></div>";
+						}
+						else{
+							$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
+									onclick='readOneView(".$row['id'].")'>
+									<span class='fa fa-eye'></span></div>";
 						}
 
 				
