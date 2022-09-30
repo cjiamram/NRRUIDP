@@ -73,6 +73,7 @@ foreach ($data as $row) {
 									<span class='fa fa-trash'></span>
 									</button></div>";
 						}
+						else
 						if($isAprove===1 && intval($row["isAprove"])===1){
 							$str="<div class='col-sm-12'><button type='button' class='btn btn-success'
 									onclick='readOneView(".$row['id'].")'>
@@ -112,6 +113,7 @@ foreach ($data as $row) {
 						}
 
 			echo '<td>'.$i++.'</td>';
+			//echo '<td>'.$isAprove."-".$row["isAprove"].'</td>';
 			echo '<td>'.$row["visitObjective"].'</td>';
 			echo '<td>'.$row["projectDetail"].'</td>';
 			echo '<td>'.$row["expectation"].'</td>';

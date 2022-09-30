@@ -122,7 +122,7 @@ class  tvisit{
 			MAX(levelWork) AS MxId 
 		FROM t_supervisoraprove 
 		WHERE 
-			workType=4 AND 
+			workType=5 AND 
 			idRequest=:idRequest AND 
 			statusAprove=1";
 		$stmt=$this->conn->prepare($query);
