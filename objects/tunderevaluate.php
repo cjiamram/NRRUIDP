@@ -104,6 +104,16 @@ class  tunderevaluate{
 		return $flag;
 	}
 
+	public function deleteUnderBySupervisor($userCode,$supervisorCode){
+		$query="DELETE FROM t_underevaluate 
+		WHERE userCode=:userCode AND supervisorCode=:supervisorCode";
+		$stmt=$this->conn->prepare($query);
+		$stmt->bindParam(":userCode",$userCode);
+		$stmt->bindParam(":supervisorCode",$supervisorCode);
+		$flag=$stmt->execute();
+		return $flag;
+	}
+
 
 	public function deleteByLevel($departmentCode,$evaluateLevel){
 		$query="DELETE FROM t_underevaluate 

@@ -191,16 +191,20 @@ div.scrollBox {
    }
 
    function saveUnder(userCode,index){
+		var superVisorCode=$("#obj_userCode").val();
+		//console.log(superVisorCode);
+		var departmentCode=$("#obj_departmentCode").val();
+		var levelEvaluate=$("#obj_evaluateLevel").val();
    		
    		var isCheck=document.getElementById("obj_chk-"+index).checked;
    		if(isCheck===true){
-		   		var superVisorCode=$("#obj_userCode").val();
-		   		var departmentCode=$("#obj_departmentCode").val();
-		   		var levelEvaluate=$("#obj_evaluateLevel").val();
+
 
 		   		var url="<?=$rootPath?>/tunderevaluate/isUnderExistBySuper.php?userCode="+userCode+"&supervisorCode="+superVisorCode;
 		   		var data=queryData(url);
 		   		var flag=data.flag;
+
+		   		console.log(flag);
 		   			
 		   		if(flag===false){
 				   		var url="<?=$rootPath?>/tunderevaluate/create.php";
@@ -211,13 +215,18 @@ div.scrollBox {
 				   				levelEvaluate:levelEvaluate
 				   		}
 				   		var flag1=executeData(url,jsonObj,false);
+				   		console.log(flag1);
 				   		return flag1;
 		   		}
    		}else{
-   			var url="<?=$rootPath?>/tunderevaluate/deleteUser.php?userCode="+userCode+"&departmentCode="+$("#obj_departmentCode").val();
+   			//Please Carely Delete User
+   			//var url="<?=$rootPath?>/tunderevaluate/deleteUser.php?userCode="+userCode+"&departmentCode="+$("#obj_departmentCode").val();
+   			//var flag1=executeGet(url);
+   			//return flag1;
+   			var url="<?=$rootPath?>/tunderevaluate/deleteUnderBySupervisor.php?userCode="+userCode+"&supervisorCode="+superVisorCode;
+   			console.log(url);
    			var flag1=executeGet(url);
    			return flag1;
-
    		}	
    }
 
@@ -474,6 +483,7 @@ div.scrollBox {
 
 		$("#obj_evaluateLevel").change(function(){
 			getSupervisor();
+			loadUser();
 		});
 
 		$("#obj_departmentCode").change(function(){
